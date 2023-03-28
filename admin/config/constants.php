@@ -1,6 +1,6 @@
 <?php
 session_start();
-define('ROOT_URL', 'http://localhost/school-managements/');
+define('ROOT_URL', 'http://localhost/School_management_xB88/');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'egator');
 define('DB_PASS', 'admin1234');
