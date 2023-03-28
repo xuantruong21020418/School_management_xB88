@@ -60,26 +60,26 @@ $teachers = mysqli_query($connection, $query);
         
         <aside>
             <ul>
-				<li><a href="classes.php"><i class="uil uil-postcard"></i></i>
+				<li><a href="classes.php"><i class="uil uil-presentation-edit"></i>
                     <h5>Classes</h5>
                 </a></li>
-                <?php if(isset($_SESSION['user_is_admin'])): ?>
-                <li><a href="students.php"><i class="uil uil-user-plus"></i></i>
+                <li><a href="students.php"><i class="uil uil-users-alt"></i>
                     <h5>Students</h5>
                 </a></li>
-                <li><a href="sections.php"><i class="uil uil-users-alt"></i></i>
+                <li><a href="sections.php"><i class="uil uil-building"></i>
                     <h5>Sections</h5>
                 </a></li>
-                <li><a href="teachers.php" class="active"><i class="uil uil-edit"></i>
+                <li><a href="teachers.php" class="active"><i class="uil uil-users-alt"></i>
                     <h5>Teachers</h5>
                 </a></li>
-                <li><a href="subjects.php"><i class="uil uil-list-ul"></i></i>
+                <li><a href="subjects.php"><i class="uil uil-edit"></i>
                     <h5>Subjects</h5>
                 </a></li>
-                <li><a href="attendance.php"><i class="uil uil-list-ul"></i></i>
+                <li><a href="attendance.php"><i class="uil uil-calendar-alt"></i>
                     <h5>Attendance</h5>
                 </a></li>
-                <li><a href="attendance-reports.php"><i class="uil uil-list-ul"></i></i>
+                <?php if(isset($_SESSION['user_is_admin'])): ?>
+                <li><a href="attendance-reports.php"><i class="uil uil-analytics"></i>
                     <h5>Attendance Reports</h5>
                 </a></li>
                 <?php endif ?>
@@ -87,17 +87,19 @@ $teachers = mysqli_query($connection, $query);
         </aside>
         <main>
             <h2>Teachers</h2>
-            <div class="container utilities-container">
-            <button name="student-pop-up" class="btn pop">Add New Teacher</button>
-            <section class="search__bar">
-            <form class="container search__bar-container" action="<?= ROOT_URL ?>search.php" method="GET">
-                <div>
-                    <i class="uil uil-search"></i>
-                    <input type="search" name="search" placeholder="Search">
-                </div>
-                <button type="submit" name="submit" class="btn">Go</button>
-            </form>
-            </section>
+            <div class="utilities-container">
+                <p>
+                    <?php if(isset($_SESSION['user_is_admin'])): ?>
+                    <button name="teacher-pop-up" class="btnLogin-popup"><i class="uil uil-user-plus"></i>Add New Teacher</button>
+                    <?php endif ?>
+                    <form class="search__bar-container" action="<?= ROOT_URL ?>admin/teacher-search-logic.php" method="GET">
+                    <div class="search-bar">
+                        <i class="uil uil-search"></i>
+                        <input type="search" name="teacher-search" placeholder="Search">
+                    </div>
+                    <button type="submit" name="submit" class="btn">Go</button>
+                    </form>
+                </p>
             </div>
             
             <?php if(mysqli_num_rows($teachers) > 0) : ?>
@@ -110,8 +112,10 @@ $teachers = mysqli_query($connection, $query);
 						<!-- <th>Photo</th> -->
 						<th>Class</th>
 						<th>Section</th>
+                        <?php if(isset($_SESSION['user_is_admin'])): ?>
 						<th>Edit</th>
                         <th>Delete</th>
+                        <?php endif ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -122,14 +126,16 @@ $teachers = mysqli_query($connection, $query);
                         <td><?= $teacher['subject'] ?></td>
 						<td><?= $teacher['name'] ?></td>
 						<td><?= $teacher['section'] ?></td>
+                        <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $teacher['teacher_id']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-teacher.php?id=<?= $teacher['teacher_id']?>" class="btn sm danger">Delete</a></td>
+                        <?php endif ?>
                     </tr>
                     <?php endwhile ?>
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No teachers found" ?></div>
+                <div class="alert__message error"><?= "No teacher found" ?></div>
                 <?php endif ?>
         </main>
     </div>

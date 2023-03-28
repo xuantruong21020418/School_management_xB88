@@ -6,7 +6,7 @@
                 <a href="https://linkedIn.com" target="_blank"><i class="uil uil-linkedin"></i></a>
                 <a href="https://twitter.com" target="_blank"><i class="uil uil-twitter"></i></a>
             </div>
-            <div class="container footer__container">
+            <div class="footer__container">
                 <article>
                     <h4>Categories</h4>
                     <ul>
@@ -48,11 +48,12 @@
                 </article>
             </div>
             <div class="footer__copyright">
-                <small>Copyright &copy; 2022</small>
+                <small>Copyright &copy; 2023</small>
             </div>
         </footer>
 
 
         <script src="<?= ROOT_URL ?>js/main.js"></script>
+        <script src="<?= ROOT_URL ?>js/signin.js"></script>
     </body>
 </html>

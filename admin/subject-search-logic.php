@@ -1,11 +1,15 @@
 <?php
+require 'partials/header.php';
 
-use LDAP\Result;
-
-include 'partials/header.php';
-
-$query = "SELECT * FROM sms_subjects ORDER BY subject_id";
-$subjects = mysqli_query($connection, $query);
+if (isset($_GET['subject-search']) && isset($_GET['submit'])) {
+    $search = filter_var($_GET['subject-search'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $query = "SELECT * FROM sms_subjects
+    WHERE subject LIKE '%$search%' ORDER BY subject_id";
+    $subjects = mysqli_query($connection, $query);
+} else {
+    header('location: ' . ROOT_URL . 'admin/subjects.php');
+    die();
+}
 ?>
 
 <section class="dashboard">
@@ -56,7 +60,8 @@ $subjects = mysqli_query($connection, $query);
         
         <aside>
             <ul>
-				<li><a href="classes.php"><i class="uil uil-presentation-edit"></i>
+            <?php if(isset($_SESSION['user_is_admin'])): ?>
+				        <li><a href="classes.php"><i class="uil uil-presentation-edit"></i>
                     <h5>Classes</h5>
                 </a></li>
                 <li><a href="students.php"><i class="uil uil-users-alt"></i>
@@ -74,7 +79,6 @@ $subjects = mysqli_query($connection, $query);
                 <li><a href="attendance.php"><i class="uil uil-calendar-alt"></i>
                     <h5>Attendance</h5>
                 </a></li>
-                <?php if(isset($_SESSION['user_is_admin'])): ?>
                 <li><a href="attendance-reports.php"><i class="uil uil-analytics"></i>
                     <h5>Attendance Reports</h5>
                 </a></li>
@@ -83,56 +87,37 @@ $subjects = mysqli_query($connection, $query);
         </aside>
         <main>
             <h2>Subjects</h2>
-            <div class="utilities-container">
-                <p>
-                    <?php if(isset($_SESSION['user_is_admin'])): ?>
-                    <button name="student-pop-up" class="btnLogin-popup"><i class="uil uil-create-dashboard"></i>Add New Subject</button>
-                    <?php endif ?>
-                    <form class="search__bar-container" action="<?= ROOT_URL ?>admin/subject-search-logic.php" method="GET">
-                    <div class="search-bar">
-                        <i class="uil uil-search"></i>
-                        <input type="search" name="subject-search" placeholder="Search">
-                    </div>
-                    <button type="submit" name="submit" class="btn">Go</button>
-                    </form>
-                </p>
-            </div>
-            
-            <?php if(mysqli_num_rows($subjects) > 0) : ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-						<th>Subject</th>
-						<!-- <th>Photo</th> -->
-						<th>Code</th>
-                        <th>Subject Type</th>
-                        <?php if(isset($_SESSION['user_is_admin'])): ?>
-						<th>Edit</th>
-                        <th>Delete</th>
-                        <?php endif ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while($subject = mysqli_fetch_assoc($subjects)) : ?>
-                    <tr>
-                        <td><?= $subject['subject_id'] ?></td>
-						<td><?= $subject['subject'] ?></td>
-                        <td><?= $subject['code'] ?></td>
-                        <td><?= $subject['type'] ?></td>
-                        <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $subject['subject_id']?>" class="btn sm">Edit</a></td>
-                        <td><a href="<?= ROOT_URL ?>admin/delete-subject.php?id=<?= $subject['subject_id']?>" class="btn sm danger">Delete</a></td>
-                        <?php endif ?>
-                    </tr>
-                    <?php endwhile ?>
-                </tbody>
-            </table>
-            <?php else : ?>
-                <div class="alert__message error"><?= "No subject found" ?></div>
-                <?php endif ?>
-        </main>
-    </div>
+        <?php if(mysqli_num_rows($subjects) > 0) : ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+				    <th>Subject</th>
+					<!-- <th>Photo</th> -->
+					<th>Code</th>
+                    <th>Subject Type</th>
+					<th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+          <tbody>
+            <?php while ($subject = mysqli_fetch_assoc($subjects)) : ?>
+              <tr>
+                <td><?= $subject['subject_id'] ?></td>
+				<td><?= $subject['subject'] ?></td>
+                <td><?= $subject['code'] ?></td>
+                <td><?= $subject['type'] ?></td>
+                <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $subject['subject_id']?>" class="btn sm">Edit</a></td>
+                <td><a href="<?= ROOT_URL ?>admin/delete-subject.php?id=<?= $subject['subject_id']?>" class="btn sm danger">Delete</a></td>
+              </tr>
+            <?php endwhile ?>
+          </tbody>
+        </table>
+        <?php else : ?>
+            <div class="alert__message error lg section_extra-margin"><p>No subject found.</p></div>
+        <?php endif ?>
+      </main>
+</div>
 </section>
 
 <?php

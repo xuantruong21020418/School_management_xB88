@@ -1,8 +1,8 @@
 <?php
 require 'partials/header.php';
 
-if (isset($_GET['section-search']) && isset($_GET['submit'])) {
-    $search = filter_var($_GET['section-search'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+if (isset($_GET['class-search']) && isset($_GET['submit'])) {
+    $search = filter_var($_GET['class-search'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $query = "SELECT id, name, section, teacher FROM sms_classes
     INNER JOIN sms_teacher
     ON sms_classes.teacher_id = sms_teacher.teacher_id
@@ -116,7 +116,7 @@ if (isset($_GET['section-search']) && isset($_GET['submit'])) {
           </tbody>
         </table>
         <?php else : ?>
-            <div class="alert__message error lg section_extra-margin"><p>No classes found.</p></div>
+            <div class="alert__message error lg section_extra-margin"><p>No class found.</p></div>
         <?php endif ?>
       </main>
 </div>

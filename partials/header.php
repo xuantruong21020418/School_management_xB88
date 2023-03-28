@@ -18,6 +18,7 @@ if(isset($_SESSION['user-id'])) {
         <title>School Management Systems</title>
         <link rel="stylesheet" href="<?= ROOT_URL ?>/css/style.css?v=<?php echo time(); ?>">
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     </head>
     <body>
         <nav>

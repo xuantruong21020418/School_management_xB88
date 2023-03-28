@@ -93,30 +93,35 @@ if (isset($_GET['student-search']) && isset($_GET['submit'])) {
                 <tr>
                     <th>ID</th>
                     <th>MSSV</th>
-						        <th>Name</th>
-					          <!-- <th>Photo</th> -->
-						        <th>Class</th>
-						        <th>Section</th>
-						        <th>Edit</th>
-                    <th>Delete</th>
+					<th>Name</th>
+					<th>Photo</th>
+					<th>Class</th>
+					<th>Section</th>
+					<th>Edit</th>
+                        <th>Delete</th>
                 </tr>
             </thead>
           <tbody>
             <?php while ($student = mysqli_fetch_assoc($students)) : ?>
               <tr>
-                      <td><?= $student['id'] ?></td>
-						          <td><?= $student['admission_no'] ?></td>
-                      <td><?= $student['name'] ?></td>
-						          <td><?= $student['class'] ?></td>
-						          <td><?= $student['section'] ?></td>
-                      <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $student['id']?>" class="btn sm">Edit</a></td>
-                      <td><a href="<?= ROOT_URL ?>admin/delete-student.php?id=<?= $student['id']?>" class="btn sm danger">Delete</a></td>
+                <td><?= $student['id'] ?></td>
+				<td><?= $student['admission_no'] ?></td>
+                <td><?= $student['name'] ?></td>
+                <td>
+                    <div class="student-photo">
+                        <img src="<?= ROOT_URL . 'images/' . $student['photo'] ?>">
+                    </div>
+                </td>
+				<td><?= $student['class'] ?></td>
+				<td><?= $student['section'] ?></td>
+                <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $student['id']?>" class="btn sm">Edit</a></td>
+                <td><a href="<?= ROOT_URL ?>admin/delete-student.php?id=<?= $student['id']?>" class="btn sm danger">Delete</a></td>
               </tr>
             <?php endwhile ?>
           </tbody>
         </table>
         <?php else : ?>
-            <div class="alert__message error lg section_extra-margin"><p>No students found.</p></div>
+            <div class="alert__message error lg section_extra-margin"><p>No student found.</p></div>
         <?php endif ?>
       </main>
 </div>

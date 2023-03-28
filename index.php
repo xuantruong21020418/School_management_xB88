@@ -1,14 +1,13 @@
 <?php
 include 'partials/header.php';
-?>
-<!-- //fetch featured post from db
+//fetch featured post from db
 $featured_query = "SELECT * FROM posts WHERE is_featured=1";
 $featured_result = mysqli_query($connection, $featured_query);
 $featured = mysqli_fetch_assoc($featured_result);
 
 //fetch 9 posts from posts table
 $query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 9";
-$posts = mysqli_query($connection, $query); -->
+$posts = mysqli_query($connection, $query);
 ?>
 
 <?php if(mysqli_num_rows($featured_result) == 1) : ?>
