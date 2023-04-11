@@ -147,14 +147,14 @@ unset($_SESSION['add-student-data']);
 						<td><?= $student['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $student['id']?>" class="btn sm">Edit</a></td>
-                        <td><a href="<?= ROOT_URL ?>admin/delete-student.php?id=<?= $student['id']?>" class="btn sm danger">Delete</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
                     <?php endwhile ?>
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No student found" ?></div>
+                <div class="alert__message error"><?= "No student found." ?></div>
                 <?php endif ?>
         </main>
     </div>
@@ -206,11 +206,6 @@ unset($_SESSION['add-student-data']);
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
-                <label>User Role</label>
-                <select name="userrole">
-                    <option value="0">Student</option>
-                    <option value="1">Admin</option>
-                </select>
                 <label>Class</label>
                 <select name="class">
                     <?php  
@@ -218,20 +213,18 @@ unset($_SESSION['add-student-data']);
                         $all_classes = mysqli_query($connection, $all_classes_query);
                     ?>
                     <?php while($class = mysqli_fetch_assoc($all_classes)) : ?>
-                        <option value="<?= $class['name'] ?>"><?= $class['name'] ?></option>
+                        <option value="<?= $class['class'] ?>"><?= $class['class'] ?></option>
                     <?php endwhile ?>
                 </select>
                 <label>Section</label>
                 <select name="section">
                     <?php  
                         $all_sections_query = "SELECT * FROM sms_section";
-                        $all_sections = mysqli_query($connection, $all_classes_query);
+                        $all_sections = mysqli_query($connection, $all_sections_query);
                     ?>
-                    <?php while($class = mysqli_fetch_assoc($all_classes)) : ?>
-                        <option value="<?= $class['name'] ?>"><?= $class['name'] ?></option>
+                    <?php while($section = mysqli_fetch_assoc($all_sections)) : ?>
+                        <option value="<?= $section['section'] ?>"><?= $section['section'] ?></option>
                     <?php endwhile ?>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
                 </select>
                 <label for="avatar">Photo</label>
                 <div class="form__control">

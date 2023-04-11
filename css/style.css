@@ -397,6 +397,7 @@ footer ul a:hover {
     cursor: pointer;
     transition: var(--transition);
     color: var(--color-white);
+    
 }
 
 .btn.sm {
@@ -468,6 +469,7 @@ footer ul a:hover {
 .alert__message {
     padding: 0.8rem 1.4rem;
     margin-bottom: 1rem;
+    margin-top: 1.5rem;
     border-radius: var(--card-border-radius-2);
 }
 

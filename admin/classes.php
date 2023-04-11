@@ -2,9 +2,10 @@
 include 'partials/header.php';
 
 //fetch sections from db
-$query = "SELECT id, name, section, teacher FROM sms_classes
+$query = "SELECT id, class, section, firstname FROM sms_classes
 INNER JOIN sms_teacher
 ON sms_classes.teacher_id = sms_teacher.teacher_id
+NATURAL JOIN sms_section
 ORDER BY id";
 $classes = mysqli_query($connection, $query);
 ?>
@@ -108,9 +109,9 @@ $classes = mysqli_query($connection, $query);
                     <?php while($class = mysqli_fetch_assoc($classes)) : ?>
                     <tr>
                         <td><?= $class['id'] ?></td>
-						<td><?= $class['name'] ?></td>
+						<td><?= $class['class'] ?></td>
                         <td><?= $class['section'] ?></td>
-                        <td><?= $class['teacher'] ?></td>
+                        <td><?= $class['firstname'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <td><a href="<?= ROOT_URL ?>admin/edit-section.php?id=<?= $class['id']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-class.php?id=<?= $class['id']?>" class="btn sm danger">Delete</a></td>
@@ -120,7 +121,7 @@ $classes = mysqli_query($connection, $query);
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No class found" ?></div>
+                <div class="alert__message error"><?= "No class found." ?></div>
             <?php endif ?>
         </main>
     </div>

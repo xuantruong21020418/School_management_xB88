@@ -720,6 +720,27 @@ footer ul a:hover {
   background: var(--color-white);
 }
 
+
+.alert__message {
+  padding: 0.8rem 1.4rem;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  border-radius: var(--card-border-radius-2);
+}
+
+.alert__message.error {
+  background: var(--color-red-light);
+  color: var(--color-red);
+}
+
+.alert__message.success {
+  background: var(--color-green-light);
+  color: var(--color-green);
+}
+
+.alert__message.lg {
+  text-align: center;
+}
   
   
   

@@ -6,6 +6,14 @@ include 'partials/header.php';
 
 $query = "SELECT * FROM sms_subjects ORDER BY subject_id";
 $subjects = mysqli_query($connection, $query);
+
+//get back form data if there was an error
+$subject_name = $_SESSION['add-subject-data']['subject'] ?? null;
+$type = $_SESSION['add-subject-data']['type'] ?? null;
+$code = $_SESSION['add-subject-data']['code'] ?? null;
+
+//delete session data
+unset($_SESSION['add-subject-data']);
 ?>
 
 <section class="dashboard">
@@ -129,11 +137,48 @@ $subjects = mysqli_query($connection, $query);
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No subject found" ?></div>
+                <div class="alert__message error"><?= "No subject found." ?></div>
                 <?php endif ?>
         </main>
     </div>
 </section>
+
+    <div class="wrapper">
+        <span class="icon-close">
+            <i class="uil uil-multiply"></i>
+        </span>
+        <div class="form-box login">
+            <h2>Add New Subject</h2>
+            <?php if(isset($_SESSION['add-subject'])): ?>
+                <div class="alert__message error">
+                    <p>
+                        <?= $_SESSION['add-subject'];
+                        unset($_SESSION['add-subject']);
+                        ?>
+                    </p>
+                </div>
+            <?php endif ?>
+            <form action="<?= ROOT_URL ?>admin/add-subject-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
+                <div class="input-box">
+                    <input type="text" name="subject" required autocomplete="new-subject"
+                    value="<?= $subject_name ?>" placeholder=" ">
+                    <label>Subject</label>
+                </div>
+                <label>Type</label>
+                <select name="type">
+                    <option value="Theoretical">Theoretical</option>
+                    <option value="Practical">Practical</option>
+                </select>
+
+                <div class="input-box">
+                    <input type="text" name="code" required autocomplete="new-code"
+                    value="<?= $code ?>" placeholder=" ">
+                    <label>Subject Code</label>
+                </div>
+                <button type="submit" name="submit" class="btnSubmit">Save</button>
+                
+        </div>
+    </div>
 
 <?php
 include '../partials/footer.php';

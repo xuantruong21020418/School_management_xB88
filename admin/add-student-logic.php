@@ -17,7 +17,6 @@ if(isset($_POST['submit'])) {
     $address = filter_var($_POST['address'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $father_name = filter_var($_POST['father_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $mother_name = filter_var($_POST['mother_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $is_admin = filter_var($_POST['userrole'], FILTER_SANITIZE_NUMBER_INT);
     $createpassword = $_POST['createpassword'];
     $confirmpassword = $_POST['confirmpassword'];
     
@@ -96,7 +95,7 @@ if(isset($_POST['submit'])) {
         //insert new student into users table
         $insert_student_sms_user_query = "INSERT INTO sms_user SET firstname='$firstname', lastname='$lastname', 
         username='$firstname', email='$email', password='$hashed_password', avatar='$photo_name', 
-        is_admin=$is_admin";
+        is_admin=0";
         
         $insert_student_sms_students_query = "INSERT INTO sms_students SET name='$firstname', admission_no = '$admission_no',
         email='$email', gender='$gender', dob='$dob', photo='$photo_name', mobile='$mobile', current_address = '$address',
@@ -115,6 +114,6 @@ if(isset($_POST['submit'])) {
 
 } else {
     // if button wasn't clicked, bounce back to signup page
-    header('location: ' . ROOT_URL . 'admin/student.php');
+    header('location: ' . ROOT_URL . 'admin/students.php');
     die();
 }

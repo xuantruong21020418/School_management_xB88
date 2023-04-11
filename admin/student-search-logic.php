@@ -115,7 +115,7 @@ if (isset($_GET['student-search']) && isset($_GET['submit'])) {
 				<td><?= $student['class'] ?></td>
 				<td><?= $student['section'] ?></td>
                 <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $student['id']?>" class="btn sm">Edit</a></td>
-                <td><a href="<?= ROOT_URL ?>admin/delete-student.php?id=<?= $student['id']?>" class="btn sm danger">Delete</a></td>
+                <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
               </tr>
             <?php endwhile ?>
           </tbody>

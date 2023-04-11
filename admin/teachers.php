@@ -4,12 +4,27 @@ use LDAP\Result;
 
 include 'partials/header.php';
 
-$query = "SELECT teacher_id, teacher, subject, name, section FROM sms_teacher
+$query = "SELECT teacher_id, firstname, subject, class, section FROM sms_teacher
 INNER JOIN sms_subjects
 ON sms_teacher.subject_id = sms_subjects.subject_id
 NATURAL JOIN sms_classes
+NATURAL JOIN sms_section
 ORDER BY teacher_id";
 $teachers = mysqli_query($connection, $query);
+
+//get back form data if there was an error
+$firstname = $_SESSION['add-teacher-data']['firstname'] ?? null;
+$lastname = $_SESSION['add-teacher-data']['lastname'] ?? null;
+$admission_date = $_SESSION['add-teacher-data']['admission_date'] ?? null;
+$dob = $_SESSION['add-teacher-data']['dob'] ?? null;
+$email = $_SESSION['add-teacher-data']['email'] ?? null;
+$mobile = $_SESSION['add-teacher-data']['mobile'] ?? null;
+$current_address = $_SESSION['add-teacher-data']['current_address'] ?? null;
+$createpassword = $_SESSION['add-teacher-data']['createpassword'] ?? null;
+$confirmpassword = $_SESSION['add-teacher-data']['confirmpassword'] ?? null;
+
+//delete session data
+unset($_SESSION['add-teacher-data']);
 ?>
 
 <section class="dashboard">
@@ -108,7 +123,7 @@ $teachers = mysqli_query($connection, $query);
                     <tr>
                         <th>ID</th>
 						<th>Name</th>
-                        <th>Assigned Subjects</th>
+                        <th>Assigned Subject</th>
 						<!-- <th>Photo</th> -->
 						<th>Class</th>
 						<th>Section</th>
@@ -122,9 +137,9 @@ $teachers = mysqli_query($connection, $query);
                     <?php while($teacher = mysqli_fetch_assoc($teachers)) : ?>
                     <tr>
                         <td><?= $teacher['teacher_id'] ?></td>
-						<td><?= $teacher['teacher'] ?></td>
+						<td><?= $teacher['firstname'] ?></td>
                         <td><?= $teacher['subject'] ?></td>
-						<td><?= $teacher['name'] ?></td>
+						<td><?= $teacher['class'] ?></td>
 						<td><?= $teacher['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $teacher['teacher_id']?>" class="btn sm">Edit</a></td>
@@ -135,11 +150,106 @@ $teachers = mysqli_query($connection, $query);
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No teacher found" ?></div>
+                <div class="alert__message error"><?= "No teacher found." ?></div>
                 <?php endif ?>
         </main>
     </div>
 </section>
+
+    <div class="wrapper">
+        <span class="icon-close">
+            <i class="uil uil-multiply"></i>
+        </span>
+        <div class="form-box login">
+            <h2>Add New Teacher</h2>
+            <?php if(isset($_SESSION['add-teacher'])): ?>
+                <div class="alert__message error">
+                    <p>
+                        <?= $_SESSION['add-teacher'];
+                        unset($_SESSION['add-teacher']);
+                        ?>
+                    </p>
+                </div>
+            <?php endif ?>
+            <form action="<?= ROOT_URL ?>admin/add-teacher-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
+                <div class="input-box">
+                    <input type="text" name="firstname" required autocomplete="new-firstname"
+                    value="<?= $firstname ?>" placeholder=" ">
+                    <label>First Name</label>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="lastname" required autocomplete="new-lastname"
+                    value="<?= $lastname ?>" placeholder=" ">
+                    <label>Last Name</label>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="admission_no" required autocomplete="new-admission_no"
+                    value="<?= $admission_no ?>" placeholder=" ">
+                    <label>Admission Number</label>
+                </div>
+                <div class="input-box">
+                    <input type="date" name="admission_date" required autocomplete="new-admission_date"
+                    value="<?= $admission_date ?>" placeholder=" ">
+                    <label>Admission Date</label>
+                </div>
+                <div class="input-box">
+                    <input type="date" name="dob" required autocomplete="new-dob"
+                    value="<?= $dob ?>" placeholder=" ">
+                    <label>Date Of Birth</label>
+                </div>
+                <label>Gender</label>
+                <select name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <label>Class</label>
+                <select name="class">
+                    <?php  
+                        $all_classes_query = "SELECT * FROM sms_classes";
+                        $all_classes = mysqli_query($connection, $all_classes_query);
+                    ?>
+                    <?php while($class = mysqli_fetch_assoc($all_classes)) : ?>
+                        <option value="<?= $class['class'] ?>"><?= $class['class'] ?></option>
+                    <?php endwhile ?>
+                </select>
+                <label>Section</label>
+                <select name="section">
+                    <?php  
+                        $all_sections_query = "SELECT * FROM sms_section";
+                        $all_sections = mysqli_query($connection, $all_sections_query);
+                    ?>
+                    <?php while($section = mysqli_fetch_assoc($all_sections)) : ?>
+                        <option value="<?= $section['section'] ?>"><?= $section['section'] ?></option>
+                    <?php endwhile ?>
+                </select>
+                <div class="input-box">
+                    <input type="text" name="email" required autocomplete="new-email"
+                    value="<?= $email ?>" placeholder=" ">
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="createpassword" required autocomplete="new-createpassword"
+                    value="<?= $createpassword ?>" placeholder=" ">
+                    <label>Create Password</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="confirmpassword" required autocomplete="new-confirmpassword"
+                    value="<?= $confirmpassword ?>" placeholder=" ">
+                    <label>Confirm Password</label>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="mobile" required autocomplete="new-mobile"
+                    value="<?= $mobile ?>" placeholder=" ">
+                    <label>Mobile Number</label>
+                </div>
+                <label>Address</label>
+                <textarea rows="5" name="address" required autocomplete="new-current_address" 
+                placeholder=" "><?= $current_address ?></textarea>
+                
+                <button type="submit" name="submit" class="btnSubmit">Save</button>
+                
+        </div>
+    </div>
 
 <?php
 include '../partials/footer.php';

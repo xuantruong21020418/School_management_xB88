@@ -231,6 +231,15 @@ unset($_SESSION['signin-data']);
         </span>
         <div class="form-box login">
             <h2>Sign In</h2>
+            <?php if(isset($_SESSION['signin'])): ?>
+                <div class="alert__message error">
+                    <p>
+                        <?= $_SESSION['signin'];
+                        unset($_SESSION['signin']);
+                        ?>
+                    </p>
+                </div>
+            <?php endif ?>
             <form action="<?= ROOT_URL ?>signin-logic.php" autocomplete="off" method="POST">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>

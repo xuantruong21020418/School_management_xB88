@@ -2,8 +2,14 @@
 include 'partials/header.php';
 
 //fetch sections from db
-$query = "SELECT section_id, section FROM sms_section ORDER BY section_id DESC";
+$query = "SELECT section_id, section FROM sms_section ORDER BY section_id";
 $sections = mysqli_query($connection, $query);
+
+//get back form data if there was an error
+$section_name = $_SESSION['add-section-data']['section'] ?? null;
+
+//delete session data
+unset($_SESSION['add-section-data']);
 ?>
 
 <section class="dashboard">
@@ -113,11 +119,38 @@ $sections = mysqli_query($connection, $query);
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No section found" ?></div>
+                <div class="alert__message error"><?= "No section found." ?></div>
             <?php endif ?>
         </main>
     </div>
 </section>
+
+<div class="wrapper">
+        <span class="icon-close">
+            <i class="uil uil-multiply"></i>
+        </span>
+        <div class="form-box login">
+            <h2>Add New Section</h2>
+            <?php if(isset($_SESSION['add-section'])): ?>
+                <div class="alert__message error">
+                    <p>
+                        <?= $_SESSION['add-section'];
+                        unset($_SESSION['add-section']);
+                        ?>
+                    </p>
+                </div>
+            <?php endif ?>
+            <form action="<?= ROOT_URL ?>admin/add-section-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
+                <div class="input-box">
+                    <input type="text" name="section" required autocomplete="new-section"
+                    value="<?= $section_name ?>" placeholder=" ">
+                    <label>Section</label>
+                </div>
+                
+                <button type="submit" name="submit" class="btnSubmit">Save</button>
+                
+        </div>
+    </div>
 
 <?php
 include '../partials/footer.php';
