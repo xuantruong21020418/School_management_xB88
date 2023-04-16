@@ -3,11 +3,11 @@ require 'partials/header.php';
 
 if (isset($_GET['teacher-search']) && isset($_GET['submit'])) {
     $search = filter_var($_GET['teacher-search'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $query = "SELECT teacher_id, teacher, subject, name, section FROM sms_teacher
+    $query = "SELECT teacher_id, firstname, subject, name, section FROM sms_teacher
     INNER JOIN sms_subjects
     ON sms_teacher.subject_id = sms_subjects.subject_id
     NATURAL JOIN sms_classes
-    WHERE teacher LIKE '%$search%'
+    WHERE firstname LIKE '%$search%'
     ORDER BY teacher_id";
     $teachers = mysqli_query($connection, $query);
 } else {
@@ -109,7 +109,7 @@ if (isset($_GET['teacher-search']) && isset($_GET['submit'])) {
             <?php while ($teacher = mysqli_fetch_assoc($teachers)) : ?>
               <tr>
                 <td><?= $teacher['teacher_id'] ?></td>
-						    <td><?= $teacher['teacher'] ?></td>
+						    <td><?= $teacher['firstname'] ?></td>
                 <td><?= $teacher['subject'] ?></td>
 				        <td><?= $teacher['name'] ?></td>
 						    <td><?= $teacher['section'] ?></td>

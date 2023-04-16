@@ -45,6 +45,22 @@ unset($_SESSION['add-section-data']);
                 ?>
             </p>
             </div>
+            <?php elseif(isset($_SESSION['edit-section-success'])) : //shows if edit section was successful ?>
+        <div class="alert__message success container">
+            <p>
+                <?= $_SESSION['edit-section-success'];
+                unset($_SESSION['edit-section-success']);
+                ?>
+            </p>
+            </div>
+<?php elseif(isset($_SESSION['edit-section'])) : //shows if edit section was not successful ?>
+        <div class="alert__message error container">
+            <p>
+                <?= $_SESSION['edit-section'];
+                unset($_SESSION['edit-section']);
+                ?>
+            </p>
+            </div>
 <?php endif ?>
     <div class="container dashboard__container">
         <button id="show__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-right-b"></i></button>
@@ -111,7 +127,7 @@ unset($_SESSION['add-section-data']);
                         <td><?= $section['section_id'] ?></td>
 						<td><?= $section['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-section.php?id=<?= $section['section_id']?>" class="btn sm">Edit</a></td>
+                        <td><a href="http://localhost/School_management_xB88/admin/edit-section.php?id=<?= $section['section_id']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-section.php?id=<?= $section['section_id']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>

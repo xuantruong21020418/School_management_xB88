@@ -129,7 +129,7 @@ unset($_SESSION['add-subject-data']);
                         <td><?= $subject['code'] ?></td>
                         <td><?= $subject['type'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $subject['subject_id']?>" class="btn sm">Edit</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/edit-subject.php?id=<?= $subject['subject_id']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-subject.php?id=<?= $subject['subject_id']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>

@@ -4,9 +4,8 @@ use LDAP\Result;
 
 include 'partials/header.php';
 
-$query = "SELECT teacher_id, firstname, subject, class, section FROM sms_teacher
-INNER JOIN sms_subjects
-ON sms_teacher.subject_id = sms_subjects.subject_id
+$query = "SELECT teacher_id, firstname, subject, class, section, email FROM sms_teacher
+NATURAL JOIN sms_subjects
 NATURAL JOIN sms_classes
 NATURAL JOIN sms_section
 ORDER BY teacher_id";
@@ -124,7 +123,6 @@ unset($_SESSION['add-teacher-data']);
                         <th>ID</th>
 						<th>Name</th>
                         <th>Assigned Subject</th>
-						<!-- <th>Photo</th> -->
 						<th>Class</th>
 						<th>Section</th>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
@@ -142,8 +140,8 @@ unset($_SESSION['add-teacher-data']);
 						<td><?= $teacher['class'] ?></td>
 						<td><?= $teacher['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $teacher['teacher_id']?>" class="btn sm">Edit</a></td>
-                        <td><a href="<?= ROOT_URL ?>admin/delete-teacher.php?id=<?= $teacher['teacher_id']?>" class="btn sm danger">Delete</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/edit-teacher.php?email=<?= $teacher['email']?>" class="btn sm">Edit</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/delete-teacher.php?email=<?= $teacher['email']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
                     <?php endwhile ?>
@@ -183,11 +181,6 @@ unset($_SESSION['add-teacher-data']);
                     <label>Last Name</label>
                 </div>
                 <div class="input-box">
-                    <input type="text" name="admission_no" required autocomplete="new-admission_no"
-                    value="<?= $admission_no ?>" placeholder=" ">
-                    <label>Admission Number</label>
-                </div>
-                <div class="input-box">
                     <input type="date" name="admission_date" required autocomplete="new-admission_date"
                     value="<?= $admission_date ?>" placeholder=" ">
                     <label>Admission Date</label>
@@ -222,11 +215,33 @@ unset($_SESSION['add-teacher-data']);
                         <option value="<?= $section['section'] ?>"><?= $section['section'] ?></option>
                     <?php endwhile ?>
                 </select>
+                <label>Subject</label>
+                <select name="subject">
+                    <?php  
+                        $all_subjects_query = "SELECT * FROM sms_subjects";
+                        $all_subjects = mysqli_query($connection, $all_subjects_query);
+                    ?>
+                    <?php while($subject = mysqli_fetch_assoc($all_subjects)) : ?>
+                        <option value="<?= $subject['subject'] ?>"><?= $subject['subject'] ?></option>
+                    <?php endwhile ?>
+                </select>
+                <label for="avatar">Photo</label>
+                <div class="form__control">
+                    <input type="file" name="photo" id="photo">
+                </div>
                 <div class="input-box">
                     <input type="text" name="email" required autocomplete="new-email"
                     value="<?= $email ?>" placeholder=" ">
                     <label>Email</label>
                 </div>
+                <div class="input-box">
+                    <input type="text" name="mobile" required autocomplete="new-mobile"
+                    value="<?= $mobile ?>" placeholder=" ">
+                    <label>Mobile Number</label>
+                </div>
+                <label>Address</label>
+                <textarea rows="5" name="address" required autocomplete="new-current_address" 
+                placeholder=" "><?= $current_address ?></textarea>
                 <div class="input-box">
                     <input type="password" name="createpassword" required autocomplete="new-createpassword"
                     value="<?= $createpassword ?>" placeholder=" ">
@@ -237,15 +252,6 @@ unset($_SESSION['add-teacher-data']);
                     value="<?= $confirmpassword ?>" placeholder=" ">
                     <label>Confirm Password</label>
                 </div>
-                <div class="input-box">
-                    <input type="text" name="mobile" required autocomplete="new-mobile"
-                    value="<?= $mobile ?>" placeholder=" ">
-                    <label>Mobile Number</label>
-                </div>
-                <label>Address</label>
-                <textarea rows="5" name="address" required autocomplete="new-current_address" 
-                placeholder=" "><?= $current_address ?></textarea>
-                
                 <button type="submit" name="submit" class="btnSubmit">Save</button>
                 
         </div>

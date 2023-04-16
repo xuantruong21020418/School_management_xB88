@@ -146,7 +146,7 @@ unset($_SESSION['add-student-data']);
 						<td><?= $student['class'] ?></td>
 						<td><?= $student['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-user.php?id=<?= $student['id']?>" class="btn sm">Edit</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/edit-student.php?email=<?= $student['email']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
@@ -265,7 +265,7 @@ unset($_SESSION['add-student-data']);
                 </div>
                 
                 <button type="submit" name="submit" class="btnSubmit">Save</button>
-                
+            </form>
         </div>
     </div>
 

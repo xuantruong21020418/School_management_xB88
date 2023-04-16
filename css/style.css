@@ -989,12 +989,26 @@ input, textarea, select {
     z-index: 1;
     color: var(--color-gray-900);
   }
-  
+
+  .form-box {
+    width: 80%;
+    padding: 40px;
+    color: var(--color-white);
+    margin: 0 auto;
+  }
+
   .form-box h2 {
     font-size: 2em;
     color: var(--color-white);
     text-align: center;
+    margin-top: 80px;
+  }
 
+  .wrapper .form-box h2 {
+    font-size: 2em;
+    color: var(--color-white);
+    text-align: center;
+    margin-top: 10px;
   }
   
   .input-box {

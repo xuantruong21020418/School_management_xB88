@@ -2,11 +2,10 @@
 include 'partials/header.php';
 
 //fetch sections from db
-$query = "SELECT id, class, section, firstname FROM sms_classes
-INNER JOIN sms_teacher
-ON sms_classes.teacher_id = sms_teacher.teacher_id
+$query = "SELECT class_id, class, section, firstname FROM sms_classes
+NATURAL JOIN sms_teacher
 NATURAL JOIN sms_section
-ORDER BY id";
+ORDER BY class_id";
 $classes = mysqli_query($connection, $query);
 ?>
 
@@ -43,7 +42,24 @@ $classes = mysqli_query($connection, $query);
                 ?>
             </p>
             </div>
+<?php elseif(isset($_SESSION['edit-class-success'])) : //shows if edit class was successful ?>
+        <div class="alert__message success container">
+            <p>
+                <?= $_SESSION['edit-class-success'];
+                unset($_SESSION['edit-class-success']);
+                ?>
+            </p>
+            </div>
+<?php elseif(isset($_SESSION['edit-class'])) : //shows if edit class was not successful ?>
+        <div class="alert__message error container">
+            <p>
+                <?= $_SESSION['edit-class'];
+                unset($_SESSION['edit-class']);
+                ?>
+            </p>
+            </div>
 <?php endif ?>
+
     <div class="container dashboard__container">
         <button id="show__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-right-b"></i></button>
         <button id="hide__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-left-b"></i></button>
@@ -96,7 +112,7 @@ $classes = mysqli_query($connection, $query);
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
+                        <th>Class</th>
                         <th>Section</th>
                         <th>Teacher</th>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
@@ -108,13 +124,13 @@ $classes = mysqli_query($connection, $query);
                 <tbody>
                     <?php while($class = mysqli_fetch_assoc($classes)) : ?>
                     <tr>
-                        <td><?= $class['id'] ?></td>
+                        <td><?= $class['class_id'] ?></td>
 						<td><?= $class['class'] ?></td>
                         <td><?= $class['section'] ?></td>
                         <td><?= $class['firstname'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-section.php?id=<?= $class['id']?>" class="btn sm">Edit</a></td>
-                        <td><a href="<?= ROOT_URL ?>admin/delete-class.php?id=<?= $class['id']?>" class="btn sm danger">Delete</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/edit-class.php?id=<?= $class['class_id']?>" class="btn sm">Edit</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/delete-class.php?id=<?= $class['class_id']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
                     <?php endwhile ?>
