@@ -73,8 +73,8 @@ unset($_SESSION['add-subject-data']);
                 <li><a href="sections.php"><i class="uil uil-building"></i>
                     <h5>Sections</h5>
                 </a></li>
-                <li><a href="score.php"><i class="uil uil-edit"></i>
-                    <h5>Score</h5>
+                <li><a href="scores.php"><i class="uil uil-edit"></i>
+                    <h5>Scores</h5>
                 </a></li>
                 <li><a href="teachers.php"><i class="uil uil-users-alt"></i>
                     <h5>Teachers</h5>

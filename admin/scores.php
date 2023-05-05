@@ -5,7 +5,7 @@ include 'partials/header.php';
 $query = "SELECT st.admission_no, st.name,
 MAX( IF(sj.subject_id = 1, sc.score, NULL) ) AS 'English',
 MAX( IF(sj.subject_id = 2, sc.score, NULL) ) AS 'Science'
-FROM sms_score sc JOIN sms_students st ON sc.admission_no = st.admission_no
+FROM sms_scores sc JOIN sms_students st ON sc.admission_no = st.admission_no
 JOIN sms_subjects sj ON sc.subject_code = sj.code
 GROUP BY sc.admission_no";
 $scores = mysqli_query($connection, $query);
@@ -27,8 +27,8 @@ $scores = mysqli_query($connection, $query);
                 <li><a href="sections.php"><i class="uil uil-building"></i>
                     <h5>Sections</h5>    
                 </a></li>
-                <li><a href="score.php" class="active"><i class="uil uil-edit"></i>
-                    <h5>Score</h5>
+                <li><a href="scores.php" class="active"><i class="uil uil-edit"></i>
+                    <h5>Scores</h5>
                 </a></li>
                 <li><a href="teachers.php"><i class="uil uil-users-alt"></i>
                     <h5>Teachers</h5>
@@ -47,16 +47,16 @@ $scores = mysqli_query($connection, $query);
             </ul>
         </aside>
         <main>
-            <h2>Score</h2>
+            <h2>Scores</h2>
             <div class="utilities-container">
                 <p>
                     <?php if(isset($_SESSION['user_is_admin'])): ?>
-                    <button name="score-pop-up" class="btnLogin-popup"><i class="uil uil-clinic-medical"></i>Add New Score</button>
+                    <button name="scores-pop-up" class="btnLogin-popup"><i class="uil uil-clinic-medical"></i>Add New Scores</button>
                     <?php endif ?>
-                    <form class="search__bar-container" action="<?= ROOT_URL ?>admin/score-search-logic.php" method="GET">
+                    <form class="search__bar-container" action="<?= ROOT_URL ?>admin/scores-search-logic.php" method="GET">
                     <div class="search-bar">
                         <i class="uil uil-search"></i>
-                        <input type="search" name="score-search" placeholder="Search Student ID">
+                        <input type="search" name="scores-search" placeholder="Search Student ID">
                     </div>
                     <button type="submit" name="submit" class="btn">Go</button>
                     </form>
@@ -70,7 +70,7 @@ $scores = mysqli_query($connection, $query);
                         <th>Student Admission</th>
                         <th>Name</th>
                         <th>Subject</th>
-                        <th>Score</th>
+                        <th>Scores</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,17 +85,17 @@ $scores = mysqli_query($connection, $query);
             <i class="uil uil-multiply"></i>
         </span>
         <div class="form-box login">
-            <h2>Add New Score</h2>
-            <?php if(isset($_SESSION['add-score'])): ?>
+            <h2>Add New Scores</h2>
+            <?php if(isset($_SESSION['add-scores'])): ?>
                 <div class="alert__message error">
                     <p>
-                        <?= $_SESSION['add-score'];
-                        unset($_SESSION['add-score']);
+                        <?= $_SESSION['add-scores'];
+                        unset($_SESSION['add-scores']);
                         ?>
                     </p>
                 </div>
             <?php endif ?>
-            <form action="<?= ROOT_URL ?>admin/add-score-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
+            <form action="<?= ROOT_URL ?>admin/add-scores-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
                 <div class="input-box">
                     <input type="text" name="admission_no" required autocomplete="new-admission_no"
                     placeholder=" ">

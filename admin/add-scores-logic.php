@@ -19,7 +19,7 @@ if(isset($_POST['submit'])) {
     
     // validate input values
     if(!$admission_no) {
-        $_SESSION['add-score'] = "Please enter the student's admission number";
+        $_SESSION['add-scores'] = "Please enter the student's admission number";
     } elseif (!$english) {
       $_SESSION['add-student'] = "Please enter the student's English Point";
     } elseif (!$admission_no) {
