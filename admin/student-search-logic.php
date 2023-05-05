@@ -3,7 +3,7 @@ require 'partials/header.php';
 
 if (isset($_GET['student-search']) && isset($_GET['submit'])) {
     $search = filter_var($_GET['student-search'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $query = "SELECT * FROM sms_students WHERE name LIKE '%$search%' ORDER BY id";
+    $query = "SELECT * FROM sms_students WHERE admission_no = $search";
     $students = mysqli_query($connection, $query);
 } else {
     header('location: ' . ROOT_URL . 'admin/students.php');
@@ -69,6 +69,9 @@ if (isset($_GET['student-search']) && isset($_GET['submit'])) {
                 </a></li>
                 <li><a href="sections.php"><i class="uil uil-users-alt"></i></i>
                     <h5>Sections</h5>
+                </a></li>
+                <li><a href="score.php"><i class="uil uil-edit"></i>
+                    <h5>Score</h5>
                 </a></li>
                 <li><a href="teachers.php"><i class="uil uil-edit"></i>
                     <h5>Teachers</h5>

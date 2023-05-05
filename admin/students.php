@@ -83,6 +83,9 @@ unset($_SESSION['add-student-data']);
                 <li><a href="sections.php"><i class="uil uil-building"></i>
                     <h5>Sections</h5>
                 </a></li>
+                <li><a href="score.php"><i class="uil uil-edit"></i>
+                    <h5>Score</h5>
+                </a></li>
                 <li><a href="teachers.php"><i class="uil uil-users-alt"></i>
                     <h5>Teachers</h5>
                 </a></li>
@@ -121,7 +124,7 @@ unset($_SESSION['add-student-data']);
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>MSSV</th>
+                        <th>Student Number</th>
 						<th>Name</th>
 					    <th>Photo</th>
 						<th>Class</th>
