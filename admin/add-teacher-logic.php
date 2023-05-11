@@ -64,6 +64,13 @@ if(isset($_POST['submit'])) {
             if (mysqli_num_rows($teacher_check_result) > 0) {
                 $_SESSION['add-teacher'] = "Email already taken";
             } else {
+              $teacher_classes_query = "SELECT class, subject FROM sms_teacher";
+              $teacher_classes_result = mysqli_query($connection, $teacher_classes_query);
+              while ($teacher_class_result = mysqli_fetch_assoc($teacher_classes_result)) {
+                if ($class == $teacher_class_result['class'] && $subject == $teacher_class_result['subject']) {
+                  $_SESSION['add-teacher'] = "Another teacher has teached this subject in this class.";
+                }
+              }
                 //work on photo
                 //rename photo
                 $time = time(); // make each image name unique using current timestamp

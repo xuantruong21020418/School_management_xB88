@@ -1,6 +1,8 @@
 <?php
 require 'config/database.php';
 
+$id = -1;
+
 //fetch current user from db
 if(isset($_SESSION['user-id'])) {
     $id = filter_var($_SESSION['user-id'], FILTER_SANITIZE_NUMBER_INT);

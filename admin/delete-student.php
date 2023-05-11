@@ -25,20 +25,6 @@ if(isset($_GET['email'])) {
         }
     }
 
-    // // //for later
-    // // //fetch all thumbnails of user's posts and delete them
-    // // $thumbnails_query = "SELECT thumbnail FROM posts WHERE author_id = $id";
-    // // $thumbnails_result = mysqli_query($connection, $thumbnails_query);
-    // // if(mysqli_num_rows($thumbnails_result) > 0) {
-    // //     while($thumbnail = mysqli_fetch_assoc($thumbnails_result)) {
-    // //         $thumbnail_path = '../images/' . $thumbnail['thumbnail'];
-    // //         //delete thumbnail from images folder if exist
-    // //         if($thumbnail_path) {
-    // //             unlink($thumbnail_path);
-    // //         }
-    // //     }
-    // // }
-
     //delete user from db sms_students
     $delete_sms_students_student_query = "DELETE FROM sms_students WHERE email LIKE '%$email%'";
     $delete_sms_students_student_result = mysqli_query($connection, $delete_sms_students_student_query);

@@ -4,12 +4,12 @@ use LDAP\Result;
 
 include 'partials/header.php';
 
-$query = "SELECT teacher_id, firstname, subject, class, section, email FROM sms_teacher
+$sql = "SELECT teacher_id, firstname, subject, class, section, email FROM sms_teacher
 NATURAL JOIN sms_subjects
 NATURAL JOIN sms_classes
 NATURAL JOIN sms_section
 ORDER BY teacher_id";
-$teachers = mysqli_query($connection, $query);
+$no_of_teachers = mysqli_query($connection, $sql);
 
 //get back form data if there was an error
 $firstname = $_SESSION['add-teacher-data']['firstname'] ?? null;
@@ -27,16 +27,8 @@ unset($_SESSION['add-teacher-data']);
 ?>
 
 <section class="dashboard">
-<?php if(isset($_SESSION['add-teacher-success'])) : //shows if add teacher was successful ?>
-        <div class="alert__message success container">
-            <p>
-                <?= $_SESSION['add-teacher-success'];
-                unset($_SESSION['add-teacher-success']);
-                ?>
-            </p>
-            </div>
-<?php elseif(isset($_SESSION['edit-teacher-success'])) : //shows if edit teacher was successful ?>
-        <div class="alert__message success container">
+<?php if(isset($_SESSION['edit-teacher-success'])) : //shows if edit teacher was successful ?>
+        <div class="alert__message success lg">
             <p>
                 <?= $_SESSION['edit-teacher-success'];
                 unset($_SESSION['edit-teacher-success']);
@@ -44,7 +36,7 @@ unset($_SESSION['add-teacher-data']);
             </p>
             </div>
 <?php elseif(isset($_SESSION['edit-teacher'])) : //shows if edit teacher was not successful ?>
-        <div class="alert__message error container">
+        <div class="alert__message error lg">
             <p>
                 <?= $_SESSION['edit-teacher'];
                 unset($_SESSION['edit-teacher']);
@@ -52,7 +44,7 @@ unset($_SESSION['add-teacher-data']);
             </p>
             </div>
 <?php elseif(isset($_SESSION['delete-teacher-success'])) : //shows if delete teacher was successful ?>
-        <div class="alert__message success container">
+        <div class="alert__message success lg">
             <p>
                 <?= $_SESSION['delete-teacher-success'];
                 unset($_SESSION['delete-teacher-success']);
@@ -60,7 +52,7 @@ unset($_SESSION['add-teacher-data']);
             </p>
             </div>
 <?php elseif(isset($_SESSION['delete-teacher'])) : //shows if delete teacher was not successful ?>
-        <div class="alert__message error container">
+        <div class="alert__message error lg">
             <p>
                 <?= $_SESSION['delete-teacher'];
                 unset($_SESSION['delete-teacher']);
@@ -92,14 +84,6 @@ unset($_SESSION['add-teacher-data']);
                 <li><a href="subjects.php"><i class="uil uil-edit"></i>
                     <h5>Subjects</h5>
                 </a></li>
-                <li><a href="attendance.php"><i class="uil uil-calendar-alt"></i>
-                    <h5>Attendance</h5>
-                </a></li>
-                <?php if(isset($_SESSION['user_is_admin'])): ?>
-                <li><a href="attendance-reports.php"><i class="uil uil-analytics"></i>
-                    <h5>Attendance Reports</h5>
-                </a></li>
-                <?php endif ?>
             </ul>
         </aside>
         <main>
@@ -119,7 +103,7 @@ unset($_SESSION['add-teacher-data']);
                 </p>
             </div>
             
-            <?php if(mysqli_num_rows($teachers) > 0) : ?>
+            <?php if(mysqli_num_rows($no_of_teachers) > 0) : ?>
             <table>
                 <thead>
                     <tr>
@@ -135,7 +119,28 @@ unset($_SESSION['add-teacher-data']);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($teacher = mysqli_fetch_assoc($teachers)) : ?>
+                    <!-- pagination -->
+                <?php
+                if (isset($_GET['pageno'])) {
+                    $pageno = $_GET['pageno'];
+                } else {
+                    $pageno = 1;
+                }
+                $no_of_records_per_page = 10;
+                $offset = ($pageno-1) * $no_of_records_per_page;
+                $total_pages_sql = "SELECT COUNT(*) FROM sms_teacher";
+                $result = mysqli_query($connection, $total_pages_sql);
+                $total_rows = mysqli_fetch_array($result)[0];
+                $total_pages = ceil($total_rows / $no_of_records_per_page);
+                $query = "SELECT teacher_id, firstname, subject, class, section, email FROM sms_teacher
+                NATURAL JOIN sms_subjects
+                NATURAL JOIN sms_classes
+                NATURAL JOIN sms_section
+                ORDER BY teacher_id LIMIT $offset, $no_of_records_per_page";
+                $teachers = mysqli_query($connection, $query);
+                ?>
+                <?php while($teacher = mysqli_fetch_array($teachers)) : ?>
+                    <!-- //here goes the data -->
                     <tr>
                         <td><?= $teacher['teacher_id'] ?></td>
 						<td><?= $teacher['firstname'] ?></td>
@@ -143,16 +148,28 @@ unset($_SESSION['add-teacher-data']);
 						<td><?= $teacher['class'] ?></td>
 						<td><?= $teacher['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-teacher.php?email=<?= $teacher['email']?>" class="btn sm">Edit</a></td>
-                        <td><a href="<?= ROOT_URL ?>admin/delete-teacher.php?email=<?= $teacher['email']?>" class="btn sm danger">Delete</a></td>
+                            <td><a href="<?= ROOT_URL ?>admin/edit-teacher.php?email=<?= $teacher['email']?>" class="btn sm">Edit</a></td>
+                            <td><a href="<?= ROOT_URL ?>admin/delete-teacher.php?email=<?= $teacher['email']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
                     <?php endwhile ?>
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No teacher found." ?></div>
-                <?php endif ?>
+                <div class="alert__message error search"><?= "No teacher found." ?></div>
+            <?php endif ?>
+
+            <!-- pagination -->
+            <ul class="pagination">
+                <li><a href="?pageno=1">First</a></li>
+                <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+                </li>
+                <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+                </li>
+                <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+            </ul>
         </main>
     </div>
 </section>
@@ -161,17 +178,37 @@ unset($_SESSION['add-teacher-data']);
         <span class="icon-close">
             <i class="uil uil-multiply"></i>
         </span>
-        <div class="form-box login">
+        <div class="form-box">
             <h2>Add New Teacher</h2>
-            <?php if(isset($_SESSION['add-teacher'])): ?>
-                <div class="alert__message error">
-                    <p>
-                        <?= $_SESSION['add-teacher'];
-                        unset($_SESSION['add-teacher']);
-                        ?>
-                    </p>
-                </div>
-            <?php endif ?>
+<?php if(isset($_SESSION['add-teacher-success'])) : //shows if add teacher was successful ?>
+    <?php echo "<style>
+                    .wrapper {
+                        transform: scale(1);
+                    }
+                </style>";
+                ?>
+        <div class="alert__message success">
+            <p>
+                <?= $_SESSION['add-teacher-success'];
+                unset($_SESSION['add-teacher-success']);
+                ?>
+            </p>
+            </div>
+<?php elseif(isset($_SESSION['add-teacher'])): //shows if add teacher was not successful ?>
+    <?php echo "<style>
+                    .wrapper {
+                        transform: scale(1);
+                    }
+                </style>";
+                ?>
+        <div class="alert__message error">
+            <p>
+                 <?= $_SESSION['add-teacher'];
+                unset($_SESSION['add-teacher']);
+                ?>
+            </p>
+        </div>
+<?php endif ?>
             <form action="<?= ROOT_URL ?>admin/add-teacher-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
                 <div class="input-box">
                     <input type="text" name="firstname" required autocomplete="new-firstname"

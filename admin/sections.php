@@ -2,8 +2,8 @@
 include 'partials/header.php';
 
 //fetch sections from db
-$query = "SELECT section_id, section FROM sms_section ORDER BY section_id";
-$sections = mysqli_query($connection, $query);
+$sql = "SELECT section_id, section FROM sms_section ORDER BY section_id";
+$no_of_sections = mysqli_query($connection, $sql);
 
 //get back form data if there was an error
 $section_name = $_SESSION['add-section-data']['section'] ?? null;
@@ -13,55 +13,39 @@ unset($_SESSION['add-section-data']);
 ?>
 
 <section class="dashboard">
-<?php if(isset($_SESSION['add-section-success'])) : //shows if add post was successful ?>
-        <div class="alert__message success container">
-            <p>
-                <?= $_SESSION['add-section-success'];
-                unset($_SESSION['add-section-success']);
-                ?>
-            </p>
-            </div>
-<?php elseif(isset($_SESSION['add-section'])) : //shows if add post not was not successful ?>
-        <div class="alert__message error container">
-            <p>
-                <?= $_SESSION['add-section'];
-                unset($_SESSION['add-section']);
-                ?>
-            </p>
-            </div>
-<?php elseif(isset($_SESSION['delete-section-success'])) : //shows if delete post was successful ?>
-        <div class="alert__message success container">
-            <p>
-                <?= $_SESSION['delete-section-success'];
-                unset($_SESSION['delete-section-success']);
-                ?>
-            </p>
-            </div>
-<?php elseif(isset($_SESSION['delete-section'])) : //shows if delete post was not successful ?>
-        <div class="alert__message error container">
-            <p>
-                <?= $_SESSION['delete-section'];
-                unset($_SESSION['delete-section']);
-                ?>
-            </p>
-            </div>
+            <?php if(isset($_SESSION['delete-section-success'])) : //shows if delete post was successful ?>
+                    <div class="alert__message success lg">
+                        <p>
+                            <?= $_SESSION['delete-section-success'];
+                            unset($_SESSION['delete-section-success']);
+                            ?>
+                        </p>
+                    </div>
+            <?php elseif(isset($_SESSION['delete-section'])) : //shows if delete post was not successful ?>
+                    <div class="alert__message error lg">
+                        <p>
+                            <?= $_SESSION['delete-section'];
+                            unset($_SESSION['delete-section']);
+                            ?>
+                        </p>
+                    </div>
             <?php elseif(isset($_SESSION['edit-section-success'])) : //shows if edit section was successful ?>
-        <div class="alert__message success container">
-            <p>
-                <?= $_SESSION['edit-section-success'];
-                unset($_SESSION['edit-section-success']);
-                ?>
-            </p>
-            </div>
-<?php elseif(isset($_SESSION['edit-section'])) : //shows if edit section was not successful ?>
-        <div class="alert__message error container">
-            <p>
-                <?= $_SESSION['edit-section'];
-                unset($_SESSION['edit-section']);
-                ?>
-            </p>
-            </div>
-<?php endif ?>
+                    <div class="alert__message success lg">
+                        <p>
+                            <?= $_SESSION['edit-section-success'];
+                            unset($_SESSION['edit-section-success']);
+                            ?>
+                        </p>
+                    </div>
+            <?php elseif(isset($_SESSION['edit-section'])) : //shows if edit section was not successful ?>
+                    <div class="alert__message error lg">
+                        <p>
+                            <?= $_SESSION['edit-section'];
+                            unset($_SESSION['edit-section']);
+                            ?>
+                        </p>
+                    </div>
+            <?php endif ?>
     <div class="container dashboard__container">
         <button id="show__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-right-b"></i></button>
         <button id="hide__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-left-b"></i></button>
@@ -85,14 +69,6 @@ unset($_SESSION['add-section-data']);
                 <li><a href="subjects.php"><i class="uil uil-edit"></i>
                     <h5>Subjects</h5>
                 </a></li>
-                <li><a href="attendance.php"><i class="uil uil-calendar-alt"></i>
-                    <h5>Attendance</h5>
-                </a></li>
-                <?php if(isset($_SESSION['user_is_admin'])): ?>
-                <li><a href="attendance-reports.php"><i class="uil uil-analytics"></i>
-                    <h5>Attendance Reports</h5>
-                </a></li>
-                <?php endif ?>
             </ul>
         </aside>
         <main>
@@ -112,7 +88,7 @@ unset($_SESSION['add-section-data']);
                 </p>
             </div>
 
-            <?php if(mysqli_num_rows($sections) > 0) : ?>
+            <?php if(mysqli_num_rows($no_of_sections) > 0) : ?>
             <table>
                 <thead>
                     <tr>
@@ -125,36 +101,85 @@ unset($_SESSION['add-section-data']);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($section = mysqli_fetch_assoc($sections)) : ?>
+                <!-- pagination -->
+                <?php
+                if (isset($_GET['pageno'])) {
+                    $pageno = $_GET['pageno'];
+                } else {
+                    $pageno = 1;
+                }
+                $no_of_records_per_page = 10;
+                $offset = ($pageno-1) * $no_of_records_per_page;
+                $total_pages_sql = "SELECT COUNT(*) FROM sms_section";
+                $result = mysqli_query($connection, $total_pages_sql);
+                $total_rows = mysqli_fetch_array($result)[0];
+                $total_pages = ceil($total_rows / $no_of_records_per_page);
+                $query = "SELECT section_id, section FROM sms_section ORDER BY section_id LIMIT $offset, $no_of_records_per_page";
+                $sections = mysqli_query($connection, $query);
+                ?>
+                <?php while($section = mysqli_fetch_array($sections)) : ?>
+                    <!-- //here goes the data -->
                     <tr>
                         <td><?= $section['section_id'] ?></td>
-						<td><?= $section['section'] ?></td>
+                        <td><?= $section['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
-                        <td><a href="http://localhost/School_management_xB88/admin/edit-section.php?id=<?= $section['section_id']?>" class="btn sm">Edit</a></td>
-                        <td><a href="<?= ROOT_URL ?>admin/delete-section.php?id=<?= $section['section_id']?>" class="btn sm danger">Delete</a></td>
+                            <td><a href="<?= ROOT_URL ?>admin/edit-section.php?id=<?= $section['section_id']?>" class="btn sm">Edit</a></td>
+                            <td><a href="<?= ROOT_URL ?>admin/delete-section.php?id=<?= $section['section_id']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
                     <?php endwhile ?>
                 </tbody>
             </table>
             <?php else : ?>
-                <div class="alert__message error"><?= "No section found." ?></div>
+                <div class="alert__message error search"><?= "No section found." ?></div>
             <?php endif ?>
+
+            <!-- pagination -->
+            <ul class="pagination">
+                <li><a href="?pageno=1">First</a></li>
+                <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+                </li>
+                <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+                </li>
+                <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+            </ul>
         </main>
     </div>
 </section>
 
-<div class="wrapper">
+    <div class="wrapper">
         <span class="icon-close">
             <i class="uil uil-multiply"></i>
         </span>
-        <div class="form-box login">
+        <div class="form-box">
             <h2>Add New Section</h2>
             <?php if(isset($_SESSION['add-section'])): ?>
+                <?php echo "<style>
+                    .wrapper {
+                        transform: scale(1);
+                    }
+                </style>";
+                ?>
                 <div class="alert__message error">
                     <p>
                         <?= $_SESSION['add-section'];
-                        unset($_SESSION['add-section']);
+                            unset($_SESSION['add-section']);
+                        ?>
+                    </p>
+                </div>
+            <?php elseif(isset($_SESSION['add-section-success'])) : //shows if add post was successful ?>
+                <?php echo "<style>
+                    .wrapper {
+                        transform: scale(1);
+                    }
+                </style>";
+                ?>
+                <div class="alert__message success">
+                    <p>
+                        <?= $_SESSION['add-section-success'];
+                            unset($_SESSION['add-section-success']);
                         ?>
                     </p>
                 </div>

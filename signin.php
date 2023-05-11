@@ -232,6 +232,12 @@ unset($_SESSION['signin-data']);
         <div class="form-box login">
             <h2>Sign In</h2>
             <?php if(isset($_SESSION['signin'])): ?>
+                <?php echo "<style>
+                .wrapper {
+                    transform: scale(1);
+                }
+                </style>";
+                ?>
                 <div class="alert__message error">
                     <p>
                         <?= $_SESSION['signin'];
@@ -263,10 +269,7 @@ unset($_SESSION['signin-data']);
         </div>
     </div>
 
-    
-
     <script src="js/signin.js"></script>
-    <script src="js/main.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

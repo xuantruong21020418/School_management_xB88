@@ -9,7 +9,7 @@ if(isset($_GET['id'])) {
     $result = mysqli_query($connection, $query);
     $class = mysqli_fetch_assoc($result);
 } else {
-    header('location: '. ROOT_URL . 'admin/classs.php');
+    header('location: '. ROOT_URL . 'admin/classes.php');
     die();
 }
 ?>

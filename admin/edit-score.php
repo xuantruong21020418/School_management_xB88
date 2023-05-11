@@ -14,7 +14,7 @@ if(isset($_GET['admission_no'])) {
 ?>
 
         <div class="form-box edit">
-            <h2>Edit Score</h2>
+            <h2>Edit Student</h2>
             <?php if(isset($_SESSION['edit-score'])): ?>
                 <div class="alert__message error">
                     <p>
@@ -24,8 +24,7 @@ if(isset($_GET['admission_no'])) {
                     </p>
                 </div>
             <?php endif ?>
-            <form action="<?= ROOT_URL ?>admin/edit-scores-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
-            <input type="hidden" name="score_id" value="<?= $student['ID'] ?>">
+            <form action="<?= ROOT_URL ?>admin/edit-score-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
                 <div class="input-box">
                     <input type="text" name="admission_no" required autocomplete="new-admission_no"
                     value='<?= $student['admission_no'] ?>' placeholder=" ">

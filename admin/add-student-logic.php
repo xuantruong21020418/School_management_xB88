@@ -100,9 +100,15 @@ if(isset($_POST['submit'])) {
         $insert_student_sms_students_query = "INSERT INTO sms_students SET name=CONCAT(' $lastname', '$firstname'), admission_no = '$admission_no',
         email='$email', gender='$gender', dob='$dob', photo='$photo_name', mobile='$mobile', current_address = '$address',
         father_name = '$father_name', mother_name = '$mother_name', class='$class', section='$section', admission_date='$admission_date'";
+
+        // $insert_sms_score_query = "INSERT INTO sms_scores sc SET name=CONCAT(' $lastname', '$firstname'), 
+        //  admission_no = '$admission_no', class='$class', subject_code = sj.code, score = 0 
+        //  JOIN sms_teacher tc ON sc.class = tc.class
+        //  JOIN sms_subjects sj ON tc.subject = sj.subject";
         
         $insert_student_sms_user_result = mysqli_query($connection, $insert_student_sms_user_query);
         $insert_student_sms_students_result = mysqli_query($connection, $insert_student_sms_students_query);
+        // $insert_sms_score_result = mysqli_query($connection, $insert_sms_score_query);
 
         if (!mysqli_errno($connection)) {
             //redirect to login page with success message
