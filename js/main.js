@@ -39,3 +39,4 @@ const hideSidebar = () => {
     hideSidebarBtn.style.display = 'none';
 }
 hideSidebarBtn.addEventListener('click', hideSidebar);
+

@@ -83,9 +83,12 @@ unset($_SESSION['add-subject-data']);
                     <h5>Attendance</h5>
                 </a></li>
                 <?php if(isset($_SESSION['user_is_admin'])): ?>
-                <li><a href="attendance-reports.php"><i class="uil uil-analytics"></i>
-                    <h5>Attendance Reports</h5>
+                    <li><a href="teacher-scores.php"><i class="uil uil-analytics"></i>
+                    <h5>Scores</h5>
                 </a></li>
+                <?php else : ?>
+                    <li><a href="student-scores.php"><i class="uil uil-analytics"></i>
+                    <h5>Scores</h5>
                 <?php endif ?>
             </ul>
         </aside>
@@ -159,6 +162,7 @@ unset($_SESSION['add-subject-data']);
                 </div>
             <?php endif ?>
             <form action="<?= ROOT_URL ?>admin/add-subject-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
+            
                 <div class="input-box">
                     <input type="text" name="subject" required autocomplete="new-subject"
                     value="<?= $subject_name ?>" placeholder=" ">

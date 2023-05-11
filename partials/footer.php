@@ -55,5 +55,6 @@
 
         <script src="<?= ROOT_URL ?>js/main.js"></script>
         <script src="<?= ROOT_URL ?>js/signin.js"></script>
+        <script src="<?= ROOT_URL ?>js/toolbar.js"></script>
     </body>
 </html>

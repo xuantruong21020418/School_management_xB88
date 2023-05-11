@@ -86,9 +86,12 @@ unset($_SESSION['add-section-data']);
                     <h5>Attendance</h5>
                 </a></li>
                 <?php if(isset($_SESSION['user_is_admin'])): ?>
-                <li><a href="attendance-reports.php"><i class="uil uil-analytics"></i>
-                    <h5>Attendance Reports</h5>
+                    <li><a href="teacher-scores.php"><i class="uil uil-analytics"></i>
+                    <h5>Scores</h5>
                 </a></li>
+                <?php else : ?>
+                    <li><a href="student-scores.php"><i class="uil uil-analytics"></i>
+                    <h5>Scores</h5>
                 <?php endif ?>
             </ul>
         </aside>

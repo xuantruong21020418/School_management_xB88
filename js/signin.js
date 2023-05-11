@@ -11,3 +11,4 @@ const closeFormBtnClose = () => {
   wrapper.style.transform = 'scale(0)';
 }
 btnClose.addEventListener('click', closeFormBtnClose);
+
