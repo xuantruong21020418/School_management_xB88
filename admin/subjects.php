@@ -194,6 +194,7 @@ unset($_SESSION['add-subject-data']);
                 </div>
             <?php endif ?>
             <form action="<?= ROOT_URL ?>admin/add-subject-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST">
+            
                 <div class="input-box">
                     <input type="text" name="subject" required autocomplete="new-subject"
                     value="<?= $subject_name ?>" placeholder=" ">
