@@ -74,7 +74,7 @@ unset($_SESSION['add-teacher-data']);
         
         <aside>
             <ul>
-				        <li><a href="classes.php"><i class="uil uil-presentation-edit"></i>
+				<li><a href="classes.php"><i class="uil uil-presentation-edit"></i>
                     <h5>Classes</h5>
                 </a></li>
                 <li><a href="students.php"><i class="uil uil-users-alt"></i>
@@ -92,6 +92,15 @@ unset($_SESSION['add-teacher-data']);
                 <li><a href="subjects.php"><i class="uil uil-edit"></i>
                     <h5>Subjects</h5>
                 </a></li>
+                <?php if(isset($_SESSION['user_is_teacher'])): ?>
+                <li><a href="index.php"><i class="uil uil-edit"></i>
+                    <h5>Mangage Classes</h5>
+                </a></li>
+                <?php elseif(isset($_SESSION['user_is_student'])): ?>
+                <li><a href="index.php"><i class="uil uil-edit"></i>
+                    <h5>Mangage Subjects</h5>
+                </a></li>
+                <?php endif ?>
             </ul>
         </aside>
         <main>

@@ -1,10 +1,27 @@
 <?php
 include 'partials/header.php';
 
-//fetch all subjects from subjects table
-$query = "SELECT * FROM sms_subjects ORDER BY subject_id";
-$subjects = mysqli_query($connection, $query);
+
+//fetch subjects from db
+if(isset($_SESSION['user_is_student'])) {
+    $subject_query = "SELECT tc.subject, sj.thumbnail, sj.subject_id
+    FROM sms_user u
+    JOIN sms_students st ON u.email = st.email
+    JOIN sms_teacher tc ON st.class = tc.class
+    JOIN sms_subjects sj ON tc.subject = sj.subject
+    WHERE u.id = $id";
+    $subjects = mysqli_query($connection, $subject_query);
+}
+//fetch classes from db
+if(isset($_SESSION['user_is_teacher'])) {
+    $class_query = "SELECT tc.class
+    FROM sms_user u
+    JOIN sms_teacher tc ON u.email = tc.email
+    WHERE u.id = $id";
+    $classes = mysqli_query($connection, $class_query);
+}
 ?>
+
         <section class="subject-search__bar">
             <form class="subject-search__bar-container" action="<?= ROOT_URL ?>search.php" method="GET">
                 <div>
@@ -16,13 +33,14 @@ $subjects = mysqli_query($connection, $query);
         </section>
         <!--------end of search-------->
 
-        <section class="subjects">
+        <?php if (isset($_SESSION['user_is_student'])) : ?>
+            <section class="subjects">
             <div class="container subjects__container">
                 <?php while ($subject = mysqli_fetch_assoc($subjects)) : ?>
                 <article class="subject">
                     <div class="subject__thumbnail">
-                        <a href="subject.php?id=<?= $subject['subject_id'] ?>">
-                            <img src="./subject_thumbnails/<?= $subject['thumbnail'] ?>">
+                        <a href="<?= ROOT_URL ?>single-subject.php?id=<?= $subject['subject_id'] ?>">
+                            <img src="../subject_thumbnails/<?= $subject['thumbnail'] ?>">
                         </a>  
                     </div>
                     <div class="subject__info">
@@ -32,9 +50,12 @@ $subjects = mysqli_query($connection, $query);
                 </article>
                 <?php endwhile ?>
             </div>
-        </section>
+            </section>
         <!--end of subjects-->
+        <?php elseif (isset($_SESSION['user_is_teacher'])) : ?>
+        <?php endif ?>
 
+        
 <?php
-include 'partials/footer.php';
+include '../partials/footer.php';
 ?>

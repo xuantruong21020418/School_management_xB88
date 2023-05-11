@@ -97,7 +97,7 @@ if(isset($_POST['submit'])) {
         username='$firstname', email='$email', password='$hashed_password', avatar='$photo_name', 
         is_admin=0";
         
-        $insert_student_sms_students_query = "INSERT INTO sms_students SET name=CONCAT(' $lastname', '$firstname'), admission_no = '$admission_no',
+        $insert_student_sms_students_query = "INSERT INTO sms_students SET name=CONCAT('$lastname ', '$firstname'), admission_no = '$admission_no',
         email='$email', gender='$gender', dob='$dob', photo='$photo_name', mobile='$mobile', current_address = '$address',
         father_name = '$father_name', mother_name = '$mother_name', class='$class', section='$section', admission_date='$admission_date'";
 

@@ -5,7 +5,8 @@ include 'partials/header.php';
 $query = "SELECT * FROM sms_subjects ORDER BY subject_id";
 $subjects = mysqli_query($connection, $query);
 ?>
-    <section class="subject-search__bar">
+        
+        <section class="subject-search__bar">
         <form class="subject-search__bar-container" action="<?= ROOT_URL ?>search.php" method="GET">
             <div>
                 <i class="uil uil-search"></i>
@@ -13,28 +14,25 @@ $subjects = mysqli_query($connection, $query);
             </div>
             <button type="submit" name="submit" class="btn">Go</button>
         </form>
+        
     </section>
     <!--------end of search-------->
 
-    <section class="dashboard__discussion">
-    <div class="container dashboard__discussion__container">
-        <button id="show__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-right-b"></i></button>
-        <button id="hide__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-left-b"></i></button>
-        <main> 
-        <div class="header">
+    <section class="dashboard__noti">
+    <div class="container dashboard__noti__container">
+        <main>
+            <div class="header">
                 <h2>Notifications</h2>
-                <?php if(isset($_SESSION['user_is_admin'])): ?>
-                <div class="add-discussion">
-                    <button type="submit" name="submit" class="btnLogin-popup"><i class="uil uil-envelope-add"></i>Add A New Message</button>
-                </div> 
-                <?php endif ?>
-        </div>    
+                <div class="add-noti">
+                    <button type="submit" name="submit" class="btnLogin-popup"><i class="uil uil-comment-alt-dots"></i>Add A New Discussion</button>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>
                         <th>Topics</th>
                         <th>Created By</th>
-					    <th>Total Responses</th>
+                        <th>Created At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,22 +43,10 @@ $subjects = mysqli_query($connection, $query);
                                 <div class="student-photo">
                                   <img src="<?= ROOT_URL . 'css/' . "avatar1.jpg" ?>">  
                                 </div>
-                                <h5>Teacher Tat-Viet Tran<br>18 Mar 2023</h5>
+                                <h3>Teacher Tat-Viet Tran</h3>
                             </div>
                         </td>
-						<td>0</td>
-                    </tr>
-                    <tr>
-                        <td><a href="<?= ROOT_URL ?>post.php">Điểm tổng kết final</a></td>
-						            <td>
-                            <div class="user__info">
-                                <div class="student-photo">
-                                  <img src="<?= ROOT_URL . 'css/' . "avatar1.jpg" ?>">  
-                                </div>
-                                <h5>Teacher Tat-Viet Tran<br>18 Mar 2023</h5>
-                            </div>
-                        </td>
-						<td>0</td>
+						<td>18 Mar 2023</td>
                     </tr>
                     <tr>
                         <td><a href="<?= ROOT_URL ?>post.php">Điểm tổng kết final</a></td>
@@ -69,10 +55,10 @@ $subjects = mysqli_query($connection, $query);
                                 <div class="student-photo">
                                   <img src="<?= ROOT_URL . 'css/' . "avatar1.jpg" ?>">  
                                 </div>
-                                <h5>Teacher Tat-Viet Tran<br>18 Mar 2023</h5>
+                                <h3>Teacher Tat-Viet Tran</h3>
                             </div>
                         </td>
-						            <td>0</td>
+						<td>18 Mar 2023</td>
                     </tr>
                     <tr>
                         <td><a href="<?= ROOT_URL ?>post.php">Điểm tổng kết final</a></td>
@@ -81,10 +67,10 @@ $subjects = mysqli_query($connection, $query);
                                 <div class="student-photo">
                                   <img src="<?= ROOT_URL . 'css/' . "avatar1.jpg" ?>">  
                                 </div>
-                                <h5>Teacher Tat-Viet Tran<br>18 Mar 2023</h5>
+                                <h3>Teacher Tat-Viet Tran</h3>
                             </div>
                         </td>
-						<td>0</td>
+						<td>18 Mar 2023</td>
                     </tr>
 
                 </tbody>
@@ -92,6 +78,7 @@ $subjects = mysqli_query($connection, $query);
         </main>
     </div>
 </section>
+<!-- end of single subject -->
 
 <?php
 include 'partials/footer.php';

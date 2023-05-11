@@ -995,24 +995,25 @@ input, textarea, select {
   }
 
 /*=============DASHBOARD-DISCUSSION================*/
-.dashboard__discussison {
+.dashboard__noti {
     /* background: transparent; */
     margin-bottom: 0;
     /* backdrop-filter: blur(20px); */
+    margin-top: 50px;
 }
 
 .sidebar__toggle {
     display: none;
 }
 
-.dashboard__discussion__container {
+.dashboard__noti__container {
     width: 89%;
     background: var(--color-gray-900);
     padding: 1em 2rem 2rem 2rem;
     margin-bottom: 5rem;
 }
 
-.dashboard__discussion main {
+.dashboard__noti main {
     margin-top: 1.5rem;
 }
 
@@ -1021,25 +1022,25 @@ input, textarea, select {
     line-height: 1;
 }
 
-.dashboard__discussion main table {
+.dashboard__noti main table {
     width: 100%;
     text-align: left;
     margin-top: 1.6rem;
 }
 
-.dashboard__discussion main table th {
+.dashboard__noti main table th {
     background: var(--color-gray-700);
     padding: 0.8rem;
     color: var(--color-white);
 }
 
-.dashboard__discussion main table td {
+.dashboard__noti main table td {
     padding: 0.8rem;
     border-bottom: 1px solid var(--color-gray-200);
     color: var(--color-white);
 }
 
-.dashboard__discussion main table tr:hover td {
+.dashboard__noti main table tr:hover td {
     background-color: var(--color-bg);
     color: var(--color-white);
     cursor: default;
@@ -1052,8 +1053,9 @@ input, textarea, select {
     justify-content: left;
 }
 
-.user__info h5 {
+.user__info h3 {
     font-weight: normal;
+    font-size: 14px;
 }
 
 .user__info .student-photo {
@@ -1071,7 +1073,7 @@ input, textarea, select {
     margin-top: 0.4rem;
 }
 
-.header .add-discussion {
+.header .add-noti {
     text-align: right;
     width: 100%;
 }
