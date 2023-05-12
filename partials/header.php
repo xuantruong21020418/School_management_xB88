@@ -23,12 +23,10 @@ if(isset($_SESSION['user-id'])) {
     <body>
         <nav>
             <div class="container nav__container">
-                <a href="<?= ROOT_URL ?>" class="nav__logo">SMS</a>
+                <a href="<?= ROOT_URL ?>admin/students.php" class="nav__logo">SMS</a>
                 <ul class="nav__items">
                     <li><a href="<?= ROOT_URL ?>admin/students.php">Dashboard</a></li>
-                    <li><a href="<?= ROOT_URL ?>about.php">About</a></li>
-                    <li><a href="<?= ROOT_URL ?>services.php">Services</a></li>
-                    <li><a href="<?= ROOT_URL ?>contact.php">Contact</a></li>
+                    <!-- <li><a href="<?= ROOT_URL ?>contact.php">Contact</a></li> -->
                     <?php if(isset($_SESSION['user-id'])): ?>
                     <li class="nav__profile">
                         <div class="avatar">

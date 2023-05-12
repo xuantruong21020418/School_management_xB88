@@ -57,6 +57,10 @@
     user-select: none;
   }
   
+  .logo a {
+    text-decoration: none;
+    color: var(--color-white);
+  }
   .navigation a {
     position: relative;
     font-size: 1.1em;
