@@ -107,7 +107,7 @@ unset($_SESSION['add-student-data']);
         <h2>Students</h2>
         <div class="utilities-container">
                 <p>
-                    <?php if(isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_teacher'])): ?>
+                    <?php if(isset($_SESSION['user_is_teacher'])): ?>
                     <button name="student-pop-up" class="btnLogin-popup"><i class="uil uil-user-plus"></i>Student Admission</button>
                     <?php endif ?>
                     <form class="search__bar-container" action="<?= ROOT_URL ?>admin/student-search-logic.php" method="GET">
@@ -129,11 +129,9 @@ unset($_SESSION['add-student-data']);
 					    <th>Photo</th>
 						<th>Class</th>
 						<th>Section</th>
-                        <?php if(isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_teacher'])): ?>
-						<th>Edit</th>
-                            <?php if(isset($_SESSION['user_is_admin'])): ?>
-                                <th>Delete</th>
-                            <?php endif ?>
+                        <?php if(isset($_SESSION['user_is_teacher'])): ?>
+						    <th>Edit</th>
+                            <th>Delete</th>
                         <?php endif ?>
                     </tr>
                 </thead>
@@ -168,11 +166,9 @@ unset($_SESSION['add-student-data']);
                         </td>
                         <td><?= $student['class'] ?></td>
                         <td><?= $student['section'] ?></td>
-                        <?php if(isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_teacher'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-student.php?email=<?= $student['email']?>" class="btn sm">Edit</a></td>
-                            <?php if(isset($_SESSION['user_is_admin'])): ?>
-                                <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
-                            <?php endif ?>
+                        <?php if(isset($_SESSION['user_is_teacher'])): ?>
+                            <td><a href="<?= ROOT_URL ?>admin/edit-student.php?email=<?= $student['email']?>" class="btn sm">Edit</a></td>
+                            <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
                     <?php endwhile ?>

@@ -21,12 +21,35 @@ if(isset($_SESSION['user_is_teacher'])) {
     JOIN sms_scores sc ON sj.code = sc.subject_code
     JOIN sms_students st ON sc.admission_no = st.admission_no
     WHERE u.id = $id";
+    $query = "SELECT sj.code FROM sms_teacher tc
+    JOIN sms_user u ON tc.email = u.email
+    JOIN sms_subjects sj ON tc.subject = sj.subject
+    WHERE u.id = $id";
+    $result = mysqli_query($connection, $query);
+    $subject = mysqli_fetch_assoc($result);
+    $sj_code = $subject['code'];
     $no_of_class_scores = mysqli_query($connection, $sql);
 }
 ?>
 
 <section class="dashboard">
-<?php if(isset($_SESSION['edit-score-success'])) : //shows if edit score was successful ?>
+<?php if(isset($_SESSION['add-score-success'])): //shows if add score was successful ?>
+    <div class="alert__message success lg">
+        <p>
+            <?= $_SESSION['add-score-success'];
+            unset($_SESSION['add-score-success']);
+            ?>
+        </p>
+    </div>
+<?php elseif(isset($_SESSION['add-score'])): //shows if add score was not successful ?>
+    <div class="alert__message error lg">
+        <p>
+            <?= $_SESSION['add-score'];
+            unset($_SESSION['add-score']);
+            ?>
+        </p>
+    </div>
+<?php elseif(isset($_SESSION['edit-score-success'])) : //shows if edit score was successful ?>
         <div class="alert__message success lg">
             <p>
                 <?= $_SESSION['edit-score-success'];
@@ -120,7 +143,7 @@ if(isset($_SESSION['user_is_teacher'])) {
             <div class="utilities-container">
                 <p>
                     <?php if(isset($_SESSION['user_is_teacher'])): ?>
-                    <a href="<?= ROOT_URL ?>admin/add-scores.php" class="btn">
+                    <a href="<?= ROOT_URL ?>admin/add-scores.php?code=<?= $sj_code ?>" class="btn score">
                     <i class="uil uil-clinic-medical"></i>Add New Scores</a>
                     <?php endif ?>
                     <div class="search_section">

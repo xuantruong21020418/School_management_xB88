@@ -5,9 +5,6 @@ use LDAP\Result;
 include 'partials/header.php';
 
 $sql = "SELECT teacher_id, firstname, subject, class, section, email FROM sms_teacher
-NATURAL JOIN sms_subjects
-NATURAL JOIN sms_classes
-NATURAL JOIN sms_section
 ORDER BY teacher_id";
 $no_of_teachers = mysqli_query($connection, $sql);
 
@@ -142,9 +139,6 @@ unset($_SESSION['add-teacher-data']);
                 $total_rows = mysqli_fetch_array($result)[0];
                 $total_pages = ceil($total_rows / $no_of_records_per_page);
                 $query = "SELECT teacher_id, firstname, subject, class, section, email FROM sms_teacher
-                NATURAL JOIN sms_subjects
-                NATURAL JOIN sms_classes
-                NATURAL JOIN sms_section
                 ORDER BY teacher_id LIMIT $offset, $no_of_records_per_page";
                 $teachers = mysqli_query($connection, $query);
                 ?>

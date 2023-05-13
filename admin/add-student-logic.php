@@ -3,6 +3,7 @@ require 'config/database.php';
 
 //get form data if submit button was clicked
 if(isset($_POST['submit'])) {
+    $sj_code = $_POST['subject_code'];
     $firstname = filter_var($_POST['firstname'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $lastname = filter_var($_POST['lastname'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $admission_no = filter_var($_POST['admission_no'], FILTER_SANITIZE_NUMBER_INT);
@@ -101,14 +102,12 @@ if(isset($_POST['submit'])) {
         email='$email', gender='$gender', dob='$dob', photo='$photo_name', mobile='$mobile', current_address = '$address',
         father_name = '$father_name', mother_name = '$mother_name', class='$class', section='$section', admission_date='$admission_date'";
 
-        // $insert_sms_score_query = "INSERT INTO sms_scores sc SET name=CONCAT(' $lastname', '$firstname'), 
-        //  admission_no = '$admission_no', class='$class', subject_code = sj.code, score = 0 
-        //  JOIN sms_teacher tc ON sc.class = tc.class
-        //  JOIN sms_subjects sj ON tc.subject = sj.subject";
+        $insert_sms_score_query = "INSERT INTO sms_scores SET name=CONCAT('$lastname ', '$firstname'), 
+         admission_no = '$admission_no', class='$class', subject_code = $sj_code, score = 0";
         
         $insert_student_sms_user_result = mysqli_query($connection, $insert_student_sms_user_query);
         $insert_student_sms_students_result = mysqli_query($connection, $insert_student_sms_students_query);
-        // $insert_sms_score_result = mysqli_query($connection, $insert_sms_score_query);
+        $insert_sms_score_result = mysqli_query($connection, $insert_sms_score_query);
 
         if (!mysqli_errno($connection)) {
             //redirect to login page with success message

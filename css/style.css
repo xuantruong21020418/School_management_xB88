@@ -112,7 +112,7 @@ img {
 small {
     color: var(--color-white);
     line-height: 1.3;
-    font-size: 1.2rem;
+    
 }
 
 /*
@@ -342,6 +342,7 @@ nav button {
 footer {
     width: 100%;
     background: var(--color-gray-900);
+    margin-top: 8rem;
     padding: 5rem 0 0;
     box-shadow: inset 0 1.5rem 1.5rem rgba(0, 0, 0, 0.2);
   }
@@ -524,6 +525,13 @@ footer ul a:hover {
     width: 100%;
     margin: auto;
     margin-top: 20px;
+}
+
+.alert__message.bg {
+    text-align: center;
+    width: 88%;
+    margin: auto;
+    margin-top: 30px;
 }
 
 form {
@@ -1125,34 +1133,12 @@ input, textarea, select {
 }
 
 /*=======response========*/
-.response-submit {
-    width: 89%;
-    margin: auto;
-    border: 2px solid var(--color-white);
-    border-radius: var(--card-border-radius-2);
-    overflow: hidden;
-    margin-bottom: 1.8rem;
-}
-
-.answer-bar {
-    background: var(--color-gray);
-    gap: 2px;
-    display: flex;
-    border-bottom: 2px solid var(--color-white);
-}
-
-.answer-bar i {
-    margin-left: 20px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
+.form-box-post {
+    width: 100%;
     color: var(--color-white);
-}
-
-.answer-bar h5 {
-    padding: 5px;
-    margin-bottom: 0;
+    margin-top: 50px;
+    padding: 40px;
+    text-align: center;
 }
 
 #textarea {
@@ -1175,16 +1161,41 @@ input, textarea, select {
     border-bottom: 1.5px solid var(--color-white);
     background: var(--color-gray-300);
     color: var(--color-white);
+    text-align: left;
+    min-height: 400px;
   }
   
-  .response-container {
-    display: none;
+  .response-container.toolbar{
+    width: 100%;
   }
-  
-  .response-container label {
+
+  .response-container .input-box label {
+    color: var(--color-white);
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 3px;
+  }
+
+  .response-container h3 {
+    color: var(--color-white);
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
+    text-align: left;
+  }
+
+  .response-container .toolbar {
+    text-align: left;
+  }
+
+  .toolbar label {
     color: var(--color-white);
     margin-left: 3px;
     margin-right: 3px;
+  }
+
+  .response-container .btnSubmit {
+    margin-top: 26px;
   }
 
   .response-container .icon-button:nth-child(1) {
@@ -1259,66 +1270,123 @@ input, textarea, select {
     color: var(--color-white);
 }
 
-#uploadedImage {
-    max-width: 200px;
-    max-height: 200px;
+.posts {
+    margin-top: 6rem;
+    /* background: transparent; */
+    margin-bottom: 0;
 }
 
-.button-container {
-    margin-left: 20px;
-    display: flex;
-    gap: 20px;
-}
-
-.button-container button {
-    color: var(--color-white);
-    background: var(--color-gray-900);
-    padding: 0.6rem 1rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    border-radius: var(--card-border-radius-2);
-}
-
-.comment-container {
-    width: 89%;
-    display: grid;
-    grid-template-columns: 3rem auto;
-    gap: 1rem;
-    background: var(--color-gray-900);
-    padding: 2rem;
+.posts .alert__message.lg {
     margin-bottom: 2rem;
-    border: 2px solid var(--color-white);
-    border-radius: var(--card-border-radius-2);
 }
 
-.comment-container #text {
-    margin-top: 10px;
-    border-radius: var(--card-border-radius-2);
-    border: 1.5px solid var(--color-white);
-    margin-bottom: 1rem;
+.posts .alert__message.lg {
+    margin-bottom: 2rem;
 }
 
-
-/*=======followup-discussion========*/
-.comment-container .response-submit {
-    width: 100%;
-    margin: auto;
-    border: 1.5px solid var(--color-white);
-    border-radius: var(--card-border-radius-2);
-    overflow: hidden;
+/*=========search==========*/
+.post-search__bar {
+    margin-top: 0;
     
 }
 
-.comment-container #textarea1 {
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box;
-    color: var(--color-white);
-    font-size: 15px;
-    background: var(--color-gray-300);
+.post-search__bar-container {
+    position: relative;
+    text-align: center;
+    width: 30rem;
+    margin: auto;
+    background: var(--color-gray);
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 0.6rem 1rem;
+    border-radius: var(--card-border-radius-2);
+    color: var(--color-gray-300);
 }
 
-.response-container1 {
-    display: none;
+.post-search__bar-container > div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.post-search__bar input {
+    background: transparent;
+    margin-left: 0.7rem;
+    padding: 0.5rem 0;
+    width: 100%;
+}
+
+.post-search__bar-container i {
+    color: var(--color-white);
+}
+
+.post-search__bar input::placeholder {
+    color: var(--color-white);
+}
+
+.post-search__bar input:-webkit-autofill,
+.post-search__bar input:-webkit-autofill:hover,
+.post-search__bar input:-webkit-autofill:focus,
+.post-search__bar input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #fff !important;
+}
+
+.add-noti {
+    font-weight: bold;
+}
+
+.add-noti.btn.discuss {
+    width: fit-content;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--color-btn);
+    border-radius: var(--card-border-radius-2);
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--color-white);
+    white-space: nowrap;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    
+}
+
+.add-noti i {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.add-noti.btn.discuss:hover {
+    background: var(--color-white);
+    color: var(--color-bg);
+}
+
+.utilities-container {
+    font-weight: bold;
+}
+
+.utilities-container.btn.score {
+    width: fit-content;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--color-btn);
+    border-radius: var(--card-border-radius-2);
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--color-white);
+    white-space: nowrap;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    
+}
+
+.utilities-container i {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.utilities-container.btn.score:hover {
+    background: var(--color-white);
+    color: var(--color-bg);
 }

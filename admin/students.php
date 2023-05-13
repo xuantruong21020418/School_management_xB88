@@ -7,6 +7,13 @@ include 'partials/header.php';
 $sql = "SELECT * FROM sms_students ORDER BY id";
 $no_of_students = mysqli_query($connection, $sql);
 
+$sj_query = "SELECT sj.code FROM sms_teacher tc
+JOIN sms_subjects sj ON tc.subject = sj.subject
+JOIN sms_user u ON u.email = tc.email
+WHERE u.id = $id";
+$sj_result = mysqli_query($connection, $sj_query);
+$subject = mysqli_fetch_assoc($sj_result);
+
 //get back form data if there was an error
 $firstname = $_SESSION['add-student-data']['firstname'] ?? null;
 $lastname = $_SESSION['add-student-data']['lastname'] ?? null;
@@ -93,13 +100,16 @@ unset($_SESSION['add-student-data']);
                     <h5>Mangage Subjects</h5>
                 </a></li>
                 <?php endif ?>
+                <li><a href="general-notis.php"><i class="uil uil-edit"></i>
+                    <h5>General Notifications</h5>
+                </a></li>        
             </ul>
         </aside>
         <main>
             <h2>Students</h2>
             <div class="utilities-container">
                 <p>
-                    <?php if(isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_teacher'])): ?>
+                    <?php if(isset($_SESSION['user_is_teacher'])): ?>
                     <button name="student-pop-up" class="btnLogin-popup"><i class="uil uil-user-plus"></i>Student Admission</button>
                     <?php endif ?>
                     <form class="search__bar-container" action="<?= ROOT_URL ?>admin/student-search-logic.php" method="GET">
@@ -122,11 +132,9 @@ unset($_SESSION['add-student-data']);
 					    <th>Photo</th>
 						<th>Class</th>
 						<th>Section</th>
-                        <?php if(isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_teacher'])): ?>
-						<th>Edit</th>
-                            <?php if(isset($_SESSION['user_is_admin'])): ?>
-                                <th>Delete</th>
-                            <?php endif ?>
+                        <?php if(isset($_SESSION['user_is_teacher'])): ?>
+						    <th>Edit</th>
+                            <th>Delete</th>
                         <?php endif ?>
                     </tr>
                 </thead>
@@ -161,11 +169,9 @@ unset($_SESSION['add-student-data']);
                         </td>
                         <td><?= $student['class'] ?></td>
                         <td><?= $student['section'] ?></td>
-                        <?php if(isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_teacher'])): ?>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-student.php?email=<?= $student['email']?>" class="btn sm">Edit</a></td>
-                            <?php if(isset($_SESSION['user_is_admin'])): ?>
-                                <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
-                            <?php endif ?>
+                        <?php if(isset($_SESSION['user_is_teacher'])): ?>
+                            <td><a href="<?= ROOT_URL ?>admin/edit-student.php?email=<?= $student['email']?>" class="btn sm">Edit</a></td>
+                            <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
                         <?php endif ?>
                     </tr>
                     <?php endwhile ?>
@@ -227,6 +233,7 @@ unset($_SESSION['add-student-data']);
                 </div>
             <?php endif ?>
             <form action="<?= ROOT_URL ?>admin/add-student-logic.php" enctype="multipart/form-data" autocomplete="off" method="POST" name="add-student-form">
+                <input type="hidden" name="subject_code" value="<?= $subject['code'] ?>">
                 <div class="input-box">
                     <input type="text" name="firstname" required autocomplete="new-firstname"
                     value="<?= $firstname ?>" placeholder=" ">
