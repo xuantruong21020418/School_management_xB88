@@ -26,7 +26,7 @@ document.getElementById("text").addEventListener("keydown", function(event) {
 });
 
 function alignText(alignment) {
-  document.getElementById("text").style.textAlign = alignment;
+  text.style.textAlign = alignment;
 }
 
 function formatText(command) {
@@ -60,13 +60,11 @@ function formatText(command) {
         observer.observe(text, { childList: true });
 
       function getContent() {
-        var temp = document.createElement("div");
-        temp.innerHTML = text.innerHTML;
         // var images = temp.querySelectorAll("img");
         // images.forEach(function(image) {
         //   image.parentNode.removeChild(image);
         // });
-        body.value = temp.innerHTML;
+        body.value = text.innerHTML;
       }
 
       // function getFilename() {

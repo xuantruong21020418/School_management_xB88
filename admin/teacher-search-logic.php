@@ -7,11 +7,8 @@ if (isset($_GET['teacher-search']) && isset($_GET['submit'])) {
       header('location: ' . ROOT_URL . 'admin/teachers.php');
       die();
     } else {
-      $sql = "SELECT teacher_id, firstname, subject, class, section FROM sms_teacher
-      NATURAL JOIN sms_subjects
-      NATURAL JOIN sms_classes
-      NATURAL JOIN sms_section
-      WHERE firstname LIKE '%$search%'
+      $sql = "SELECT teacher_id, CONCAT_WS(' ', firstname, lastname) AS fullname, subject, class, section FROM sms_teacher
+      WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%'
       ORDER BY teacher_id";
       $no_of_teachers = mysqli_query($connection, $sql);
     }
@@ -144,14 +141,12 @@ unset($_SESSION['add-teacher-data']);
                 }
                 $no_of_records_per_page = 10;
                 $offset = ($pageno-1) * $no_of_records_per_page;
-                $total_pages_sql = "SELECT COUNT(*) FROM sms_teacher";
+                $total_pages_sql = "SELECT COUNT(*) FROM sms_teacher WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%'";
                 $result = mysqli_query($connection, $total_pages_sql);
                 $total_rows = mysqli_fetch_array($result)[0];
                 $total_pages = ceil($total_rows / $no_of_records_per_page);
-                $query = "SELECT teacher_id, firstname, subject, class, section, email FROM sms_teacher
-                NATURAL JOIN sms_subjects
-                NATURAL JOIN sms_classes
-                NATURAL JOIN sms_section
+                $query = "SELECT teacher_id, CONCAT_WS(' ', firstname, lastname) AS fullname, subject, class, section, email FROM sms_teacher
+                WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%'
                 ORDER BY teacher_id LIMIT $offset, $no_of_records_per_page";
                 $teachers = mysqli_query($connection, $query);
                 ?>
@@ -159,7 +154,7 @@ unset($_SESSION['add-teacher-data']);
                     <!-- //here goes the data -->
                     <tr>
                         <td><?= $teacher['teacher_id'] ?></td>
-						<td><?= $teacher['firstname'] ?></td>
+						<td><?= $teacher['fullname'] ?></td>
                         <td><?= $teacher['subject'] ?></td>
 						<td><?= $teacher['class'] ?></td>
 						<td><?= $teacher['section'] ?></td>

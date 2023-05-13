@@ -7,11 +7,9 @@ if (isset($_GET['class-search']) && isset($_GET['submit'])) {
         header('location: ' . ROOT_URL . 'admin/classes.php');
         die();
     } else {
-        $query = "SELECT class_id, class, section, firstname FROM sms_classes
-        NATURAL JOIN sms_teacher
-        NATURAL JOIN sms_section
-        WHERE class LIKE '%$search%'
-        ORDER BY class_id";
+        $query = "SELECT class_id, class, section
+        FROM sms_classes
+        WHERE class LIKE '$search'";
         $no_of_classes = mysqli_query($connection, $query);
     } 
 } else {
@@ -113,7 +111,6 @@ if (isset($_GET['class-search']) && isset($_GET['submit'])) {
                         <th>ID</th>
                         <th>Class</th>
                         <th>Section</th>
-                        <th>Teacher</th>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -130,14 +127,13 @@ if (isset($_GET['class-search']) && isset($_GET['submit'])) {
                 }
                 $no_of_records_per_page = 10;
                 $offset = ($pageno-1) * $no_of_records_per_page;
-                $total_pages_sql = "SELECT COUNT(*) FROM sms_classes";
+                $total_pages_sql = "SELECT COUNT(*) FROM sms_classes WHERE class LIKE '$search'";
                 $result = mysqli_query($connection, $total_pages_sql);
                 $total_rows = mysqli_fetch_array($result)[0];
                 $total_pages = ceil($total_rows / $no_of_records_per_page);
-                $query = "SELECT class_id, class, section, firstname FROM sms_classes
-                NATURAL JOIN sms_teacher
-                NATURAL JOIN sms_section
-                ORDER BY class_id LIMIT $offset, $no_of_records_per_page";
+                $query = "SELECT class_id, class, section
+                FROM sms_classes
+                WHERE class LIKE '$search' LIMIT $offset, $no_of_records_per_page";
                 $classes = mysqli_query($connection, $query);
                 ?>
                 <?php while($class = mysqli_fetch_array($classes)) : ?>
@@ -146,7 +142,6 @@ if (isset($_GET['class-search']) && isset($_GET['submit'])) {
                         <td><?= $class['class_id'] ?></td>
 						<td><?= $class['class'] ?></td>
                         <td><?= $class['section'] ?></td>
-                        <td><?= $class['firstname'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <td><a href="<?= ROOT_URL ?>admin/edit-class.php?id=<?= $class['class_id']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-class.php?id=<?= $class['class_id']?>" class="btn sm danger">Delete</a></td>
@@ -225,19 +220,7 @@ if (isset($_GET['class-search']) && isset($_GET['submit'])) {
                     <?php while($section = mysqli_fetch_assoc($all_sections)) : ?>
                         <option value="<?= $section['section'] ?>"><?= $section['section'] ?></option>
                     <?php endwhile ?>
-                </select>
-
-                <label>Teacher</label>
-                <select name="teacher">
-                    <?php  
-                        $all_teachers_query = "SELECT * FROM sms_teacher";
-                        $all_teachers = mysqli_query($connection, $all_teachers_query);
-                    ?>
-                    <?php while($teacher = mysqli_fetch_assoc($all_teachers)) : ?>
-                        <option value="<?= $teacher['teacher_id'] ?>"><?= $teacher['firstname'] ?></option>
-                    <?php endwhile ?>
-                </select>
-                
+                </select>              
                 <button type="submit" name="submit" class="btnSubmit">Save</button>
             </form>
                 

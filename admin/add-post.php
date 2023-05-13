@@ -30,7 +30,7 @@ unset($_SESSION['add-post-data']);
                     <div class="response-container" id="response-container">
                     <div class="input-box">
                         <input type="text" name="title" required autocomplete="new-title" id="title"
-                        placeholder=" " value="<?= $title ?>">
+                        placeholder="" value="<?= $title ?>">
                         <label>Title</label>
                     </div>
                     <h3>Body</h3>
@@ -62,19 +62,19 @@ unset($_SESSION['add-post-data']);
                                 <option value="Verdana">Verdana</option>
                             </select>
 
-                            <button class="icon-button" onclick="alignText('left')">
+                            <button type="button" class="icon-button" onclick="alignText('left')">
                                 <i class="uil uil-align-left"></i>
                             </button>
-                            <button class="icon-button" onclick="alignText('center')">
+                            <button type="button" class="icon-button" onclick="alignText('center')">
                                 <i class="uil uil-align-center"></i>
                             </button>
-                            <button class="icon-button" onclick="alignText('right')">
+                            <button type="button" class="icon-button" onclick="alignText('right')">
                                 <i class="uil uil-align-right"></i>
                             </button>
-                            <button class="icon-button" onclick="formatText('bold')">
+                            <button type="button" class="icon-button" onclick="formatText('bold')">
                                 <i class="uil uil-bold"></i>
                             </button>
-                            <button class="icon-button" onclick="formatText('italic')">
+                            <button type="button" class="icon-button" onclick="formatText('italic')">
                                 <i class="uil uil-italic"></i>
                             </button>
                         </div>

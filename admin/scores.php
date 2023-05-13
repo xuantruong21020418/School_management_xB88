@@ -147,7 +147,7 @@ if(isset($_SESSION['user_is_teacher'])) {
                     <i class="uil uil-clinic-medical"></i>Add New Scores</a>
                     <?php endif ?>
                     <div class="search_section">
-                        <?php if(isset($_SESSION['user_is_teacher'])): ?>
+                        <?php if(isset($_SESSION['user_is_teacher']) || isset($_SESSION['user_is_admin'])): ?>
                         <form class="search__bar-container" action="<?= ROOT_URL ?>admin/scores-search-logic.php" method="GET">
                         <div class="search-bar">
                             <i class="uil uil-search"></i>

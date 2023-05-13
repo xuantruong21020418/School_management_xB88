@@ -4,7 +4,8 @@ include 'partials/header.php';
 if(isset($_GET['id'])) {
   $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
   $query = "SELECT *
-  FROM sms_admin_posts ap";
+  FROM sms_admin_posts ap
+  WHERE admin_post_id = $id";
   $result = mysqli_query($connection, $query);
   $post = mysqli_fetch_assoc($result);
 } else {

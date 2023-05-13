@@ -139,7 +139,7 @@ $no_of_posts = mysqli_query($connection, $sql);
                                 <h3>Teacher <?= $post['name'] ?></h3>
                             </div>
                         </td>
-						            <td><?= $post['created_at'] ?></td>
+						<td><?= $post['created_at'] ?></td>
                         <td><a href="<?= ROOT_URL ?>admin/edit-post.php?id=<?= $post['teacher_post_id']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-post.php?id=<?= $post['teacher_post_id']?>" class="btn sm danger">Delete</a></td>
                     </tr>

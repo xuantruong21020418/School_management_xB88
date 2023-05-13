@@ -1,20 +1,18 @@
 <?php
 include 'partials/header.php';
 
-//fetch sections from db
-$sql = "SELECT cl.class_id, cl.class, se.section, tc.firstname FROM sms_classes cl
-JOIN sms_teacher tc ON cl.teacher_id = tc.teacher_id
-JOIN sms_section se ON cl.section = se.section
+//fetch classes from db
+$sql = "SELECT class_id, class, section
+FROM sms_classes
 ORDER BY class_id";
 $no_of_classes = mysqli_query($connection, $sql);
 
 //get back form data if there was an error
 $class_name = $_SESSION['add-class-data']['class'] ?? null;
 $section_name = $_SESSION['add-class-data']['section'] ?? null;
-$teacher_id = $_SESSION['add-class-data']['teacher_id'] ?? null;
 
-//delete session data
-unset($_SESSION['add-subject-data']);
+//delete class data
+unset($_SESSION['add-class-data']);
 ?>
 
 <section class="dashboard">
@@ -109,7 +107,6 @@ unset($_SESSION['add-subject-data']);
                         <th>ID</th>
                         <th>Class</th>
                         <th>Section</th>
-                        <th>Teacher</th>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -130,9 +127,7 @@ unset($_SESSION['add-subject-data']);
                 $result = mysqli_query($connection, $total_pages_sql);
                 $total_rows = mysqli_fetch_array($result)[0];
                 $total_pages = ceil($total_rows / $no_of_records_per_page);
-                $query = "SELECT cl.class_id, cl.class, se.section, tc.firstname FROM sms_classes cl
-                JOIN sms_teacher tc ON cl.teacher_id = tc.teacher_id
-                JOIN sms_section se ON cl.section = se.section
+                $query = "SELECT class_id, class, section FROM sms_classes
                 ORDER BY class_id LIMIT $offset, $no_of_records_per_page";
                 $classes = mysqli_query($connection, $query);
                 ?>
@@ -142,7 +137,6 @@ unset($_SESSION['add-subject-data']);
                         <td><?= $class['class_id'] ?></td>
 						<td><?= $class['class'] ?></td>
                         <td><?= $class['section'] ?></td>
-                        <td><?= $class['firstname'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <td><a href="<?= ROOT_URL ?>admin/edit-class.php?id=<?= $class['class_id']?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-class.php?id=<?= $class['class_id']?>" class="btn sm danger">Delete</a></td>
@@ -221,19 +215,7 @@ unset($_SESSION['add-subject-data']);
                     <?php while($section = mysqli_fetch_assoc($all_sections)) : ?>
                         <option value="<?= $section['section'] ?>"><?= $section['section'] ?></option>
                     <?php endwhile ?>
-                </select>
-
-                <label>Teacher</label>
-                <select name="teacher">
-                    <?php  
-                        $all_teachers_query = "SELECT * FROM sms_teacher";
-                        $all_teachers = mysqli_query($connection, $all_teachers_query);
-                    ?>
-                    <?php while($teacher = mysqli_fetch_assoc($all_teachers)) : ?>
-                        <option value="<?= $teacher['teacher_id'] ?>"><?= $teacher['firstname'] ?></option>
-                    <?php endwhile ?>
-                </select>
-                
+                </select>                
                 <button type="submit" name="submit" class="btnSubmit">Save</button>
             </form>
         </div>

@@ -5,15 +5,12 @@ require 'config/database.php';
 if(isset($_POST['submit'])) {
   $class_name = filter_var($_POST['class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $section_name = $_POST['section'];
-  $teacher_id = $_POST['teacher'];
     
     // validate input values
     if(!$class_name) {
       $_SESSION['add-class'] = "Please enter the class Name";
     } else if (!$section_name) {
       $_SESSION['add-class'] = "Please enter the class's Section";
-    } else if (!$teacher_id) {
-      $_SESSION['add-class'] = "Please enter the class teacher's Name";
     } else {
             //check if class already exist in db
             $class_check_query = "SELECT * FROM sms_classes WHERE
@@ -32,8 +29,7 @@ if(isset($_POST['submit'])) {
         die();
     } else {
         //insert new class into classs table
-        $insert_class_query = "INSERT INTO sms_classes SET class='$class_name', section='$section_name'
-        , teacher_id=$teacher_id";
+        $insert_class_query = "INSERT INTO sms_classes SET class='$class_name', section='$section_name'";
         
         $insert_class_result = mysqli_query($connection, $insert_class_query);
 
