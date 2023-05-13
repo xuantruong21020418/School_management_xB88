@@ -106,7 +106,6 @@ unset($_SESSION['add-subject-data']);
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
 						<th>Subject</th>
 						<!-- <th>Photo</th> -->
 						<th>Code</th>
@@ -136,7 +135,6 @@ unset($_SESSION['add-subject-data']);
                 <?php while($subject = mysqli_fetch_array($subjects)) : ?>
                     <!-- //here goes the data -->
                     <tr>
-                        <td><?= $subject['subject_id'] ?></td>
 						<td><?= $subject['subject'] ?></td>
                         <td><?= $subject['code'] ?></td>
                         <td><?= $subject['type'] ?></td>

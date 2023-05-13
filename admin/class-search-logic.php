@@ -108,7 +108,6 @@ if (isset($_GET['class-search']) && isset($_GET['submit'])) {
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Class</th>
                         <th>Section</th>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
@@ -139,7 +138,6 @@ if (isset($_GET['class-search']) && isset($_GET['submit'])) {
                 <?php while($class = mysqli_fetch_array($classes)) : ?>
                     <!-- //here goes the data -->
                     <tr>
-                        <td><?= $class['class_id'] ?></td>
 						<td><?= $class['class'] ?></td>
                         <td><?= $class['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>

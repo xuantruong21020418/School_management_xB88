@@ -123,7 +123,6 @@ unset($_SESSION['add-student-data']);
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Student Number</th>
 						<th>Name</th>
 					    <th>Photo</th>
@@ -156,7 +155,6 @@ unset($_SESSION['add-student-data']);
                 <?php while($student = mysqli_fetch_array($students)) : ?>
                     <!-- //here goes the data -->
                     <tr>
-                        <td><?= $student['id'] ?></td>
                         <td><?= $student['admission_no'] ?></td>
                         <td><?= $student['name'] ?></td>
                         <td>

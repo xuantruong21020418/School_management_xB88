@@ -101,7 +101,6 @@ unset($_SESSION['add-section-data']);
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Section</th>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                         <th>Edit</th>
@@ -129,7 +128,6 @@ unset($_SESSION['add-section-data']);
                 <?php while($section = mysqli_fetch_array($sections)) : ?>
                     <!-- //here goes the data -->
                     <tr>
-                        <td><?= $section['section_id'] ?></td>
                         <td><?= $section['section'] ?></td>
                         <?php if(isset($_SESSION['user_is_admin'])): ?>
                             <td><a href="<?= ROOT_URL ?>admin/edit-section.php?id=<?= $section['section_id']?>" class="btn sm">Edit</a></td>

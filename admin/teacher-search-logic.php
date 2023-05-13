@@ -120,7 +120,6 @@ unset($_SESSION['add-teacher-data']);
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
 						<th>Name</th>
                         <th>Assigned Subject</th>
                         <th>Class</th>
@@ -153,7 +152,6 @@ unset($_SESSION['add-teacher-data']);
                 <?php while($teacher = mysqli_fetch_array($teachers)) : ?>
                     <!-- //here goes the data -->
                     <tr>
-                        <td><?= $teacher['teacher_id'] ?></td>
 						<td><?= $teacher['fullname'] ?></td>
                         <td><?= $teacher['subject'] ?></td>
 						<td><?= $teacher['class'] ?></td>
