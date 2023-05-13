@@ -4,33 +4,31 @@ const text = document.getElementById("text");
 const body = document.getElementById("body");
 const photo = document.getElementById("photo");
 
-document.getElementById("text").addEventListener("keydown", function(event) {
-  if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
-      var fontSize = document.getElementById("fontSize").value;
-      var fontFamily = document.getElementById("fontFamily").value;
-      var text = document.getElementById("text");
-      var selection = window.getSelection();
-      if (selection.rangeCount) {
-          var range = selection.getRangeAt(0);
-          var span = document.createElement("span");
-          span.style.fontSize = fontSize + "px";
-          span.style.fontFamily = fontFamily;
-          span.textContent = event.key;
-          range.insertNode(span);
-          range.setStartAfter(span);
-          selection.removeAllRanges();
-          selection.addRange(range);
-          event.preventDefault();
-      }
-  }
-});
+function makeBold() {
+  document.execCommand('bold', false, null);
+}
+
+function changeFontSize() {
+  let fontSize = document.querySelector('#font-size').value;
+  document.execCommand('fontSize', false, fontSize);
+}
+
+function changeFontFamily() {
+  let fontFamily = document.querySelector('#font-family').value;
+  document.execCommand('fontName', false, fontFamily);
+}
+
+let boldButton = document.querySelector('#bold-button');
+boldButton.addEventListener('click', makeBold);
+
+let fontSizeSelect = document.querySelector('#font-size');
+fontSizeSelect.addEventListener('change', changeFontSize);
+
+let fontFamilySelect = document.querySelector('#font-family');
+fontFamilySelect.addEventListener('change', changeFontFamily);
 
 function alignText(alignment) {
   text.style.textAlign = alignment;
-}
-
-function formatText(command) {
-  document.execCommand(command, false, null);
 }
 
         fileInput.addEventListener('change', () => {
@@ -66,10 +64,3 @@ function formatText(command) {
         // });
         body.value = text.innerHTML;
       }
-
-      // function getFilename() {
-      //   var input = document.getElementById("fileInput");
-      //   var img = input.files[0];
-      //   var imageName = img.name;
-      //   photo.value = imageName;
-      // }

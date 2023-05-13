@@ -9,12 +9,12 @@ if (isset($_POST['submit'])) {
   // echo $author_id . "<br>" . $class_id . "<br>" . $title . "<br>" . $body . "<br>" . $photo['name'] . "<br>";
 }
 
-    // //validate form data
-    // if(!$title) {
-    //     $_SESSION['add-post'] = "Enter post title";
-    // } elseif(!$body) {
-    //     $_SESSION['add-post'] = "Enter post body";
-    // }
+    //validate form data
+    if(!$title) {
+        $_SESSION['add-post'] = "Enter post title";
+    } elseif(!$body) {
+        $_SESSION['add-post'] = "Enter post body";
+    }
     
 //redirect back (with form data) to add-post page if there is any problem
 if(isset($_SESSION['add-post'])) {

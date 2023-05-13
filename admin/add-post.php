@@ -42,22 +42,30 @@ unset($_SESSION['add-post-data']);
                                 <input type="file" id="fileInput" name="photo">
                                 <span id="fileName"></span>
                             </div>
-                            <label for="fontSize">Font Size:</label>
-                            <select id="fontSize">
+                            <!-- <select id="fontSize">
                                 <option value="10">10</option>
                                 <option value="12">12</option>
                                 <option value="14">14</option>
                                 <option value="16" selected>16</option>
                                 <option value="18">18</option>
                                 <option value="20">20</option>
+                                <option value="1">Small</option>
+                                <option value="3" selected>Normal</option>
+                                <option value="5">Large</option>
+                                <option value="7">Extra Large</option>
+                            </select> -->
+                            <label for="font-size">Font Size:</label>
+                            <select id="font-size">
+                                <option value="1">Small</option>
+                                <option value="3" selected>Normal</option>
+                                <option value="5">Large</option>
+                                <option value="7">Extra Large</option>
                             </select>
-
-                            <label for="fontFamily">Font:</label>
-                                <select id="fontFamily">
-                                <option value="'Montserrat', sans-serif" selected>Montserrat</option>
+                            <label for="font-family">Font Family:</label>
+                            <select id="font-family">
+                                <option value="Montserrat" selected>Montserrat</option>
                                 <option value="Arial">Arial</option>
                                 <option value="Courier New">Courier New</option>
-                                <option value="Georgia">Georgia</option>
                                 <option value="Times New Roman">Times New Roman</option>
                                 <option value="Verdana">Verdana</option>
                             </select>
@@ -71,7 +79,7 @@ unset($_SESSION['add-post-data']);
                             <button type="button" class="icon-button" onclick="alignText('right')">
                                 <i class="uil uil-align-right"></i>
                             </button>
-                            <button type="button" class="icon-button" onclick="formatText('bold')">
+                            <button type="button" class="icon-button" id="bold-button">
                                 <i class="uil uil-bold"></i>
                             </button>
                             <button type="button" class="icon-button" onclick="formatText('italic')">
@@ -88,6 +96,7 @@ unset($_SESSION['add-post-data']);
             <!-- endOfToolBar -->
         </form>
     </div>
+
 <?php
 include '../partials/footer.php';
 ?>

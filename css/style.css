@@ -42,7 +42,6 @@
     list-style: none;
     text-decoration: none;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -52,6 +51,10 @@ body {
     overflow-x: hidden;
     background: var(--color-bg);
     font-size: 0.9rem;
+}
+
+::placeholder {
+    font-family: 'Montserrat', sans-serif;
 }
 
 .container {
@@ -722,6 +725,7 @@ input, textarea, select {
     padding-top: 1rem;
     padding-bottom: 1rem;
     font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .btnLogin-popup i {
