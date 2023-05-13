@@ -14,7 +14,7 @@ if(isset($_POST['submit'])) {
     } else {
             //check if class already exist in db
             $class_check_query = "SELECT * FROM sms_classes WHERE
-            class = '$class_name'";
+            class LIKE '$class_name'";
             $class_check_result = mysqli_query($connection, $class_check_query);
             if (mysqli_num_rows($class_check_result) > 0) {
               $_SESSION['add-class'] = "Class's already existed";             
@@ -28,8 +28,11 @@ if(isset($_POST['submit'])) {
         header('location: ' . ROOT_URL . '/admin/classes.php');
         die();
     } else {
+        $thumbnails = array("thumbnail1.jpg", "thumbnail2.jpg", "thumbnail3.jpg", "thumbnail4.jpg", "thumbnail5.jpg",
+        "thumbnail6.jpg", "thumbnail7.jpg", "thumbnail8.jpg", "thumbnail9.jpg", "thumbnail10.jpg", "thumbnail11.jpg");
+        $thumbnail = array_rand($thumbnails, 1);
         //insert new class into classs table
-        $insert_class_query = "INSERT INTO sms_classes SET class='$class_name', section='$section_name'";
+        $insert_class_query = "INSERT INTO sms_classes SET class='$class_name', section='$section_name', thumbnail='$thumbnails[$thumbnail]'";
         
         $insert_class_result = mysqli_query($connection, $insert_class_query);
 
