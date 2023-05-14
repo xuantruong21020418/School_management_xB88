@@ -42,18 +42,6 @@ unset($_SESSION['add-post-data']);
                                 <input type="file" id="fileInput" name="photo">
                                 <span id="fileName"></span>
                             </div>
-                            <!-- <select id="fontSize">
-                                <option value="10">10</option>
-                                <option value="12">12</option>
-                                <option value="14">14</option>
-                                <option value="16" selected>16</option>
-                                <option value="18">18</option>
-                                <option value="20">20</option>
-                                <option value="1">Small</option>
-                                <option value="3" selected>Normal</option>
-                                <option value="5">Large</option>
-                                <option value="7">Extra Large</option>
-                            </select> -->
                             <label for="font-size">Font Size:</label>
                             <select id="font-size">
                                 <option value="1">Small</option>

@@ -101,6 +101,9 @@ unset($_SESSION['add-student-data']);
                     <h5>Mangage Subjects</h5>
                 </a></li>
                 <?php endif ?>
+                <li><a href="general-notis.php"><i class="uil uil-edit"></i>
+                    <h5>General Notifications</h5>
+                </a></li> 
             </ul>
       </aside>
     <main>
