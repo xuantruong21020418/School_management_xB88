@@ -151,7 +151,7 @@ unset($_SESSION['signin-data']);
                     The purpose of this system is to provide a valuable tool to keep track of the quality of education in high school for managers or teachers
                     and help students to keep up to date with the latest notifications of the school. Besides, with an optimized and approachable GUI, we trust
                     that the product will be suitable for the huge range of end users, especially students and teacher in high school.<br>
-                    — Tran Xuan Truong, Group Leader
+                    — Nguyen Tien Phong, Group Leader
                     </p>
                 </div>
                     
