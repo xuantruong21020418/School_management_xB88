@@ -4,7 +4,7 @@ use LDAP\Result;
 
 include 'partials/header.php';
 
-if(isset($_SESSION['user_is_admin'])) {
+if(isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_student'])) {
     $sql = "SELECT * FROM sms_students ORDER BY id";
     $no_of_students = mysqli_query($connection, $sql);
 }

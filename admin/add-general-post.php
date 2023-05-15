@@ -24,7 +24,7 @@ unset($_SESSION['add-post-data']);
                     <div class="response-container" id="response-container">
                     <div class="input-box">
                         <input type="text" name="title" required autocomplete="new-title" id="title"
-                        placeholder=" " value="<?= $title ?>">
+                        placeholder="" value="<?= $title ?>">
                         <label>Title</label>
                     </div>
                     <h3>Body</h3>
@@ -36,45 +36,42 @@ unset($_SESSION['add-post-data']);
                                 <input type="file" id="fileInput" name="photo">
                                 <span id="fileName"></span>
                             </div>
-                            <label for="fontSize">Font Size:</label>
-                            <select id="fontSize">
-                                <option value="10">10</option>
-                                <option value="12">12</option>
-                                <option value="14">14</option>
-                                <option value="16" selected>16</option>
-                                <option value="18">18</option>
-                                <option value="20">20</option>
+                            <label for="font-size">Font Size:</label>
+                            <select id="font-size">
+                                <option value="1">Small</option>
+                                <option value="3" selected>Normal</option>
+                                <option value="5">Large</option>
+                                <option value="7">Extra Large</option>
                             </select>
-
-                            <label for="fontFamily">Font:</label>
-                                <select id="fontFamily">
-                                <option value="'Montserrat', sans-serif" selected>Montserrat</option>
+                            <label for="font-family">Font Family:</label>
+                            <select id="font-family">
+                                <option value="Montserrat" selected>Montserrat</option>
                                 <option value="Arial">Arial</option>
                                 <option value="Courier New">Courier New</option>
-                                <option value="Georgia">Georgia</option>
                                 <option value="Times New Roman">Times New Roman</option>
                                 <option value="Verdana">Verdana</option>
                             </select>
 
-                            <button class="icon-button" onclick="alignText('left')">
+                            <button type="button" class="icon-button" onclick="alignText('left')">
                                 <i class="uil uil-align-left"></i>
                             </button>
-                            <button class="icon-button" onclick="alignText('center')">
+                            <button type="button" class="icon-button" onclick="alignText('center')">
                                 <i class="uil uil-align-center"></i>
                             </button>
-                            <button class="icon-button" onclick="alignText('right')">
+                            <button type="button" class="icon-button" onclick="alignText('right')">
                                 <i class="uil uil-align-right"></i>
                             </button>
-                            <button class="icon-button" onclick="formatText('bold')">
+                            <button type="button" class="icon-button" id="bold-button">
                                 <i class="uil uil-bold"></i>
                             </button>
-                            <button class="icon-button" onclick="formatText('italic')">
+                            <button type="button" class="icon-button" onclick="formatText('italic')">
                                 <i class="uil uil-italic"></i>
                             </button>
                         </div>
                         <div id="text" contenteditable="true"></div>
                         <input type="hidden" id="body" name="body">
                         <!-- <input type="hidden" id="photo" name="photo"> -->
+                        <input type="hidden" name="class_id" value="<?= $class_id ?>">
                         <button type="submit" name="submit" class="btnSubmit">Save</button>
                         
                     </div>
