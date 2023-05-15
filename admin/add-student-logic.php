@@ -1,6 +1,8 @@
 <?php
 require 'config/database.php';
 
+$score = -1;
+
 //get form data if submit button was clicked
 if(isset($_POST['submit'])) {
     $sj_code = $_POST['subject_code'];
@@ -54,12 +56,24 @@ if(isset($_POST['submit'])) {
             $hashed_password = password_hash($createpassword, PASSWORD_DEFAULT);
 
             //check if username of email already exist in db
-            $student_check_query = "SELECT * FROM sms_user WHERE
-            'email'='$email'";
+            $student_check_query = "SELECT * FROM sms_students WHERE admission_no = $admission_no";
             $student_check_result = mysqli_query($connection, $student_check_query);
-            if (mysqli_num_rows($student_check_result) > 0) {
-                $_SESSION['add-student'] = "Email already taken";
+            $no_of_student = mysqli_num_rows($student_check_result);
+            // echo $no_of_student . "<br>" . $email . "<br>" . $admission_no . "<br>";
+            $score_check_query = "SELECT * FROM sms_scores WHERE
+            subject_code = $sj_code";
+            $score_check_result = mysqli_query($connection, $score_check_query);
+            $result = mysqli_num_rows($score_check_result);
+            // echo $result . "<br>";
+            if ($no_of_student > 0) {
+                if ($result > 0) {
+                    $_SESSION['add-student'] = "Email already taken";
+                } else {
+                    $score = 2;
+                }
+                
             } else {
+                $score = 1;
                 //work on photo
                 //rename photo
                 $time = time(); // make each image name unique using current timestamp
@@ -85,6 +99,8 @@ if(isset($_POST['submit'])) {
             }
         }
     }
+// }
+// echo $score;
 
     //redirect back to signup if there was any problem
     if(isset($_SESSION['add-student'])) {
@@ -93,7 +109,8 @@ if(isset($_POST['submit'])) {
         header('location: ' . ROOT_URL . '/admin/students.php');
         die();
     } else {
-        //insert new student into users table
+        if ($score == 1) {
+            //insert new student into users table
         $insert_student_sms_user_query = "INSERT INTO sms_user SET firstname='$firstname', lastname='$lastname', 
         username='$firstname', email='$email', password='$hashed_password', avatar='$photo_name', 
         is_admin=0";
@@ -108,6 +125,14 @@ if(isset($_POST['submit'])) {
         $insert_student_sms_user_result = mysqli_query($connection, $insert_student_sms_user_query);
         $insert_student_sms_students_result = mysqli_query($connection, $insert_student_sms_students_query);
         $insert_sms_score_result = mysqli_query($connection, $insert_sms_score_query);
+        }
+        if ($score == 2) {
+            $insert_sms_score_query = "INSERT INTO sms_scores SET name=CONCAT('$lastname ', '$firstname'), 
+         admission_no = '$admission_no', class='$class', subject_code = $sj_code, score = 0";
+        
+        $insert_sms_score_result = mysqli_query($connection, $insert_sms_score_query);
+        }
+        
 
         if (!mysqli_errno($connection)) {
             //redirect to login page with success message

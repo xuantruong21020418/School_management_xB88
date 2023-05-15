@@ -210,11 +210,6 @@ unset($_SESSION['signin-data']);
                     value="<?= $password ?>" placeholder=" ">
                     <label>Password</label>
                 </div>
-                <div class="remember-forgot">
-                    <label><input type="checkbox">
-                    Remember me</label>
-                    <a href="#">Forget Password?</a>
-                </div>
                 <button type="submit" name="submit" class="btn">Sign In</button>
                 
         </div>

@@ -4,15 +4,23 @@ use LDAP\Result;
 
 include 'partials/header.php';
 
-$sql = "SELECT * FROM sms_students ORDER BY id";
-$no_of_students = mysqli_query($connection, $sql);
+if(isset($_SESSION['user_is_admin'])) {
+    $sql = "SELECT * FROM sms_students ORDER BY id";
+    $no_of_students = mysqli_query($connection, $sql);
+}
 
-$sj_query = "SELECT sj.code FROM sms_teacher tc
-JOIN sms_subjects sj ON tc.subject = sj.subject
-JOIN sms_user u ON u.email = tc.email
-WHERE u.id = $id";
-$sj_result = mysqli_query($connection, $sj_query);
-$subject = mysqli_fetch_assoc($sj_result);
+if(isset($_SESSION['user_is_teacher'])) {
+    $sql = "SELECT * FROM sms_students ORDER BY id";
+    $no_of_students = mysqli_query($connection, $sql);
+
+    $sj_query = "SELECT sj.code, tc.class FROM sms_teacher tc
+    JOIN sms_subjects sj ON tc.subject = sj.subject
+    JOIN sms_user u ON u.email = tc.email
+    WHERE u.id = $id";
+    $sj_result = mysqli_query($connection, $sj_query);
+    $subject = mysqli_fetch_assoc($sj_result);
+    $sj_code = $subject['code'];
+}
 
 //get back form data if there was an error
 $firstname = $_SESSION['add-student-data']['firstname'] ?? null;
@@ -122,62 +130,62 @@ unset($_SESSION['add-student-data']);
                 </p>
             </div>
             
-            <?php if(mysqli_num_rows($no_of_students) > 0) : ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student Number</th>
-						<th>Name</th>
-					    <th>Photo</th>
-						<th>Class</th>
-						<th>Section</th>
-                        <?php if(isset($_SESSION['user_is_teacher'])): ?>
-						    <th>Edit</th>
+            <?php if(isset($_SESSION['user_is_teacher'])) : ?>
+                <?php if(mysqli_num_rows($no_of_students) > 0) : ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Number</th>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>Class</th>
+                            <th>Section</th>
+                            <th>Edit</th>
                             <th>Delete</th>
-                        <?php endif ?>
-                    </tr>
-                </thead>
-                <tbody>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                <!-- pagination -->
-                <?php
-                if (isset($_GET['pageno'])) {
-                    $pageno = $_GET['pageno'];
-                } else {
-                    $pageno = 1;
-                }
-                $no_of_records_per_page = 10;
-                $offset = ($pageno-1) * $no_of_records_per_page;
-                $total_pages_sql = "SELECT COUNT(*) FROM sms_students";
-                $result = mysqli_query($connection, $total_pages_sql);
-                $total_rows = mysqli_fetch_array($result)[0];
-                $total_pages = ceil($total_rows / $no_of_records_per_page);
-                $query = "SELECT * FROM sms_students ORDER BY id LIMIT $offset, $no_of_records_per_page";
-                $students = mysqli_query($connection, $query);
-                ?>
-                <?php while($student = mysqli_fetch_array($students)) : ?>
-                    <!-- //here goes the data -->
-                    <tr>
-                        <td><?= $student['admission_no'] ?></td>
-                        <td><?= $student['name'] ?></td>
-                        <td>
-                            <div class="student-photo">
-                                <img src="<?= ROOT_URL . 'images/' . $student['photo'] ?>">
-                            </div>
-                        </td>
-                        <td><?= $student['class'] ?></td>
-                        <td><?= $student['section'] ?></td>
-                        <?php if(isset($_SESSION['user_is_teacher'])): ?>
+                    <!-- pagination -->
+                    <?php
+                    if (isset($_GET['pageno'])) {
+                        $pageno = $_GET['pageno'];
+                    } else {
+                        $pageno = 1;
+                    }
+                    $no_of_records_per_page = 10;
+                    $offset = ($pageno-1) * $no_of_records_per_page;
+                    $total_pages_sql = "SELECT COUNT(*) FROM sms_scores WHERE subject_code = $sj_code";
+                    $result = mysqli_query($connection, $total_pages_sql);
+                    $total_rows = mysqli_fetch_array($result)[0];
+                    $total_pages = ceil($total_rows / $no_of_records_per_page);
+                    $query = "SELECT sc.admission_no, sc.name, sc.class, st.photo, st.section, st.email FROM sms_scores sc
+                    JOIN sms_students st ON sc.admission_no = st.admission_no
+                    WHERE subject_code = $sj_code
+                    ORDER BY sc.ID LIMIT $offset, $no_of_records_per_page";
+                    $students = mysqli_query($connection, $query);
+                    ?>
+                    <?php while($student = mysqli_fetch_array($students)) : ?>
+                        <!-- //here goes the data -->
+                        <tr>
+                            <td><?= $student['admission_no'] ?></td>
+                            <td><?= $student['name'] ?></td>
+                            <td>
+                                <div class="student-photo">
+                                    <img src="<?= ROOT_URL . 'images/' . $student['photo'] ?>">
+                                </div>
+                            </td>
+                            <td><?= $student['class'] ?></td>
+                            <td><?= $student['section'] ?></td>
                             <td><a href="<?= ROOT_URL ?>admin/edit-student.php?email=<?= $student['email']?>" class="btn sm">Edit</a></td>
                             <td><a href="<?= ROOT_URL ?>admin/delete-student.php?email=<?= $student['email']?>" class="btn sm danger">Delete</a></td>
-                        <?php endif ?>
-                    </tr>
-                    <?php endwhile ?>
-                </tbody>
-            </table>
-            <?php else : ?>
-                <div class="alert__message error search"><?= "No student found." ?></div>
-            <?php endif ?>
+                        </tr>
+                        <?php endwhile ?>
+                    </tbody>
+                </table>
+                <?php else : ?>
+                    <div class="alert__message error search"><?= "No student found." ?></div>
+                <?php endif ?>
 
             <!-- pagination -->
             <ul class="pagination">
@@ -190,6 +198,69 @@ unset($_SESSION['add-student-data']);
                 </li>
                 <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
             </ul>
+            <?php elseif (isset($_SESSION['user_is_admin']) || isset($_SESSION['user_is_student']) ) : ?> 
+                <?php if(mysqli_num_rows($no_of_students) > 0) : ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Number</th>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>Class</th>
+                            <th>Section</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <!-- pagination -->
+                    <?php
+                    if (isset($_GET['pageno'])) {
+                        $pageno = $_GET['pageno'];
+                    } else {
+                        $pageno = 1;
+                    }
+                    $no_of_records_per_page = 10;
+                    $offset = ($pageno-1) * $no_of_records_per_page;
+                    $total_pages_sql = "SELECT COUNT(*) FROM sms_students ORDER BY id";
+                    $result = mysqli_query($connection, $total_pages_sql);
+                    $total_rows = mysqli_fetch_array($result)[0];
+                    $total_pages = ceil($total_rows / $no_of_records_per_page);
+                    $query = "SELECT * FROM sms_students ORDER BY id
+                    LIMIT $offset, $no_of_records_per_page";
+                    $students = mysqli_query($connection, $query);
+                    ?>
+                    <?php while($student = mysqli_fetch_array($students)) : ?>
+                        <!-- //here goes the data -->
+                        <tr>
+                            <td><?= $student['admission_no'] ?></td>
+                            <td><?= $student['name'] ?></td>
+                            <td>
+                                <div class="student-photo">
+                                    <img src="<?= ROOT_URL . 'images/' . $student['photo'] ?>">
+                                </div>
+                            </td>
+                            <td><?= $student['class'] ?></td>
+                            <td><?= $student['section'] ?></td>
+                        </tr>
+                        <?php endwhile ?>
+                    </tbody>
+                </table>
+                <?php else : ?>
+                    <div class="alert__message error search"><?= "No student found." ?></div>
+                <?php endif ?>
+
+            <!-- pagination -->
+            <ul class="pagination">
+                <li><a href="?pageno=1">First</a></li>
+                <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+                </li>
+                <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+                </li>
+                <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+            </ul>
+            <?php endif ?>
         </main>
     </div>
 

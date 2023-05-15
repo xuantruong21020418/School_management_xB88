@@ -113,7 +113,7 @@ if(isset($_POST['submit'])) {
         //insert new teacher into users table
         $insert_teacher_sms_user_query = "INSERT INTO sms_user SET firstname='$firstname', lastname='$lastname', 
         username='$firstname', email='$email', password='$hashed_password', avatar='$photo_name', 
-        is_admin=1";
+        is_admin=2";
         
         $insert_teacher_sms_teachers_query = "INSERT INTO sms_teacher SET firstname='$firstname', lastname='$lastname',
         email='$email', gender='$gender', dob='$dob', photo='$photo_name', mobile='$mobile', current_address = '$address',
