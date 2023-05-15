@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th5 13, 2023 lúc 05:47 AM
+-- Thời gian đã tạo: Th5 15, 2023 lúc 09:18 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -52,7 +52,6 @@ CREATE TABLE `sms_classes` (
   `class_id` int(11) UNSIGNED NOT NULL,
   `class` varchar(50) NOT NULL,
   `section` varchar(50) NOT NULL,
-  `teacher_id` int(11) UNSIGNED NOT NULL,
   `thumbnail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -60,8 +59,9 @@ CREATE TABLE `sms_classes` (
 -- Đang đổ dữ liệu cho bảng `sms_classes`
 --
 
-INSERT INTO `sms_classes` (`class_id`, `class`, `section`, `teacher_id`, `thumbnail`) VALUES
-(1, '1', 'B', 4, 'thumbnail7.jpg');
+INSERT INTO `sms_classes` (`class_id`, `class`, `section`, `thumbnail`) VALUES
+(1, '1', 'B', 'thumbnail7.jpg'),
+(6, '2', 'B', 'thumbnail8.jpg');
 
 -- --------------------------------------------------------
 
@@ -83,8 +83,28 @@ CREATE TABLE `sms_scores` (
 --
 
 INSERT INTO `sms_scores` (`ID`, `name`, `admission_no`, `class`, `subject_code`, `score`) VALUES
-(13, 'Tran Tat Viet', 21020132, '1', 210, 9),
-(14, 'Tran  Xuan Truong', 21020418, '1', 210, 9.3);
+(17, 'Nguyen Ngoc My Anh', 21020000, '1', 210, 9),
+(18, 'Phi Duy Anh', 21020001, '1', 210, 9),
+(19, 'Nguyen Tien Dat', 21020002, '1', 210, 10),
+(20, 'Nguyen Tuan Duc', 21020004, '1', 210, 8.5),
+(21, 'Nguyen Trung Hai', 21020005, '1', 210, 10),
+(22, 'Le Dang Minh Hien', 21020006, '1', 210, 9.5),
+(23, 'Duong Minh Hieu', 21020007, '1', 210, 10),
+(24, 'Nguyen Dinh Hieu', 21020008, '1', 210, 9),
+(25, 'Phan Hien', 21020009, '1', 210, 9),
+(26, 'Ha Tuan Hoang', 21020010, '1', 210, 8),
+(27, 'Phan Hoang', 21020011, '1', 210, 7.5),
+(28, 'Tran Duc Huy', 21020012, '1', 210, 10),
+(29, 'Dinh Khanh Hung', 21020013, '1', 210, 9.5),
+(30, 'Doan Minh Khanh', 21020014, '1', 210, 8.5),
+(31, 'Luc Nguyen Khoi ', 21020016, '1', 210, 9),
+(32, 'Phan Anh Khoi', 21020017, '1', 210, 10),
+(33, 'Hoang Tuan Kiet', 21020018, '1', 210, 9),
+(34, 'Nguyen Khac Hai Long', 21020019, '1', 210, 8.5),
+(35, 'Nguyen Ngoc Long', 21020020, '1', 210, 9.5),
+(37, 'Tran Tat Viet', 21020132, '1', 210, 0),
+(38, 'Tran Tat Viet', 21020132, '1', 280, 0),
+(39, 'Dang Nhat Minh', 21020021, '2', 280, 0);
 
 -- --------------------------------------------------------
 
@@ -102,7 +122,7 @@ CREATE TABLE `sms_section` (
 --
 
 INSERT INTO `sms_section` (`section_id`, `section`) VALUES
-(5, 'B');
+(1, 'B');
 
 -- --------------------------------------------------------
 
@@ -136,8 +156,27 @@ CREATE TABLE `sms_students` (
 --
 
 INSERT INTO `sms_students` (`id`, `name`, `gender`, `dob`, `photo`, `mobile`, `email`, `current_address`, `father_name`, `father_mobile`, `father_occupation`, `mother_name`, `mother_mobile`, `mother_occupation`, `admission_no`, `class`, `section`, `admission_date`) VALUES
-(11, 'Tran Tat Viet', 'male', '2003-01-01', '1683934840avatar7.jpg', 123456789, '21020132@vnu.edu.vn', 'Address.', 'Toan', 0, '', 'Phong', 0, '', 21020132, '1', 'B', '2021-01-01'),
-(12, 'Tran  Xuan Truong', 'male', '2003-01-01', '1683934893avatar2.jpg', 123456789, '21020418@vnu.edu.vn', 'Address.', 'Phong', 0, '', 'Toan', 0, '', 21020418, '1', 'B', '2021-01-01');
+(14, 'Nguyen Ngoc My Anh', 'female', '2003-01-01', '1684126343avatar1.jpg', 979235038, '21020000@vnu.edu.vn', 'Address.', 'Lam', 0, '', 'Thuy', 0, '', 21020000, '1', 'B', '2021-01-01'),
+(15, 'Phi Duy Anh', 'male', '2003-01-01', '1684126396avatar2.jpg', 979235038, '21020001@vnu.edu.vn', 'Address.', 'Cuong ', 0, '', 'Dung', 0, '', 21020001, '1', 'B', '2021-01-01'),
+(16, 'Nguyen Tien Dat', 'male', '2003-01-01', '1684126476avatar3.jpg', 979235038, '21020003@vnu.edu.vn', 'Address.', 'Hoa ', 0, '', 'Oanh', 0, '', 21020002, '1', 'B', '2021-01-01'),
+(17, 'Nguyen Tuan Duc', 'male', '2003-01-01', '1684126530avatar8.jpg', 979235038, '21020004@vnu.edu.vn', 'Address.', 'Tuan', 0, '', 'Oanh', 0, '', 21020004, '1', 'B', '2021-01-01'),
+(18, 'Nguyen Trung Hai', 'male', '2003-01-01', '1684126598avatar11.jpg', 979235038, '21020005@vnu.edu.vn', 'Address.', 'Thang', 0, '', 'Nga', 0, '', 21020005, '1', 'B', '2021-01-01'),
+(19, 'Le Dang Minh Hien', 'male', '2003-01-01', '1684126694avatar13.jpg', 979235038, '21020006@vnu.edu.vn', 'Address.', 'Bac', 0, '', 'Thuy', 0, '', 21020006, '1', 'B', '2021-01-01'),
+(20, 'Duong Minh Hieu', 'male', '2003-01-01', '1684126748avatar15.jpg', 979235038, '21020007@vnu.edu.vn', 'Address.', 'Tuyen', 0, '', 'Nhung', 0, '', 21020007, '1', 'B', '2021-01-01'),
+(21, 'Nguyen Dinh Hieu', 'male', '2003-01-01', '1684126802avatar2.jpg', 979235038, '21020008@vnu.edu.vn', 'Address.', 'Hiep', 0, '', 'Thom', 0, '', 21020008, '1', 'B', '2021-01-01'),
+(22, 'Phan Hien', 'male', '2003-01-01', '1684126898avatar3.jpg', 979235038, '21020009@vnu.edu.vn', 'Address.', 'Quang', 0, '', 'Hoa', 0, '', 21020009, '1', 'B', '2021-01-01'),
+(23, 'Ha Tuan Hoang', 'male', '2003-01-01', '1684126962avatar8.jpg', 979235038, '21020010@vnu.edu.vn', 'Address.', 'Xuat', 0, '', 'Hoai', 0, '', 21020010, '1', 'B', '2021-01-01'),
+(24, 'Phan Hoang', 'male', '2003-01-01', '1684127005avatar11.jpg', 979235038, '21020011@vnu.edu.vn', 'Address.', 'Dai', 0, '', 'Hang', 0, '', 21020011, '1', 'B', '2021-01-01'),
+(25, 'Tran Duc Huy', 'male', '2003-01-01', '1684127062avatar13.jpg', 979235038, '21020012@vnu.edu.vn', 'Address.', 'Anh', 0, '', 'Oanh', 0, '', 21020012, '1', 'B', '2021-01-01'),
+(26, 'Dinh Khanh Hung', 'male', '2003-01-01', '1684127131avatar15.jpg', 979235038, '21020013@vnu.edu.vn', 'Address.', 'Tuan', 0, '', 'Trang', 0, '', 21020013, '1', 'B', '2021-01-01'),
+(27, 'Doan Minh Khanh', 'male', '2003-01-01', '1684127172avatar2.jpg', 979235038, '21020015@vnu.edu.vn', 'Address.', 'Chau', 0, '', 'Dao', 0, '', 21020014, '1', 'B', '2021-01-01'),
+(28, 'Luc Nguyen Khoi ', 'male', '2003-01-01', '1684127222avatar3.jpg', 979235038, '21020016@vnu.edu.vn', 'Address.', 'Hoang', 0, '', 'Huong', 0, '', 21020016, '1', 'B', '2021-01-01'),
+(29, 'Phan Anh Khoi', 'male', '2003-01-01', '1684127285avatar8.jpg', 979235038, '21020017@vnu.edu.vn', 'Address.', 'Anh', 0, '', 'Anh', 0, '', 21020017, '1', 'B', '2021-01-01'),
+(30, 'Hoang Tuan Kiet', 'male', '2003-01-01', '1684127348avatar11.jpg', 979235038, '21020018@vnu.edu.vn', 'Address.', 'Toan', 0, '', 'Huyen', 0, '', 21020018, '1', 'B', '2021-01-01'),
+(31, 'Nguyen Khac Hai Long', 'male', '2003-01-01', '1684127386avatar11.jpg', 979235038, '21020019@vnu.edu.vn', 'Address.', 'Hai', 0, '', 'Hong', 0, '', 21020019, '1', 'B', '0021-01-02'),
+(32, 'Nguyen Ngoc Long', 'male', '2003-01-01', '1684127426avatar13.jpg', 979235038, '21020020@vnu.edu.vn', 'Address.', 'Bang', 0, '', 'Van', 0, '', 21020020, '1', 'B', '2021-01-01'),
+(33, 'Tran Tat Viet', 'male', '2003-01-01', '1684130203avatar2.jpg', 979235038, '21020132@vnu.edu.vn', 'Address.', 'Son', 0, '', 'Ha', 0, '', 21020132, '1', 'B', '2021-01-01'),
+(34, 'Dang Nhat Minh', 'male', '2003-01-01', '1684130847avatar3.jpg', 979235038, '21020021@vnu.edu.vn', 'Address.', 'Hung', 0, '', 'Anh', 0, '', 21020021, '2', 'B', '2021-01-01');
 
 -- --------------------------------------------------------
 
@@ -160,7 +199,16 @@ CREATE TABLE `sms_subjects` (
 INSERT INTO `sms_subjects` (`subject_id`, `subject`, `type`, `code`, `thumbnail`) VALUES
 (1, 'English', 'Theoretical', 210, 'thumbnail1.jpg'),
 (12, 'Mathematics', 'Theoretical', 220, 'thumbnail11.jpg'),
-(16, 'Physics', 'Theoretical', 240, 'thumbnail9.jpg');
+(16, 'Physics', 'Theoretical', 240, 'thumbnail9.jpg'),
+(23, 'Chemistry', 'Theoretical', 250, 'thumbnail6.jpg'),
+(24, 'Biology', 'Theoretical', 230, 'thumbnail7.jpg'),
+(25, 'Technology', 'Theoretical', 260, 'thumbnail6.jpg'),
+(26, 'Literatures', 'Theoretical', 270, 'thumbnail3.jpg'),
+(27, 'History', 'Theoretical', 280, 'thumbnail6.jpg'),
+(28, 'Geography', 'Theoretical', 290, 'thumbnail10.jpg'),
+(29, 'Information Technology', 'Theoretical', 300, 'thumbnail7.jpg'),
+(30, 'Physical Excercises', 'Practical', 310, 'thumbnail8.jpg'),
+(31, 'Civic Education', 'Theoretical', 320, 'thumbnail10.jpg');
 
 -- --------------------------------------------------------
 
@@ -189,7 +237,17 @@ CREATE TABLE `sms_teacher` (
 --
 
 INSERT INTO `sms_teacher` (`teacher_id`, `firstname`, `lastname`, `gender`, `subject`, `class`, `section`, `admission_date`, `dob`, `email`, `mobile`, `current_address`, `photo`) VALUES
-(4, 'John', 'Doe', 'female', 'English', '1', 'B', '2010-01-01', '1980-01-01', 'janedoe@vnu.edu.vn', 12346789, 'address.', '1681634010avatar10.jpg');
+(12, 'Thanh Huong', 'Pham Thi', 'female', 'English', '1', 'B', '2021-01-01', '1980-01-01', 'phamthithanhhuong@vnu.edu.vn', 979235038, 'Address.', '1684124951avatar1.jpg'),
+(13, 'Thu Huyen', 'Bui Thi', 'female', 'History', '1', 'B', '0021-01-02', '1980-01-01', 'thuhuyen@vnu.edu.vn', 979235038, 'Address.', '1684125017avatar4.jpg'),
+(14, 'Yen My', 'Nguyen Thi', 'female', 'Geography', '1', 'B', '2021-01-01', '1980-01-01', 'yenmy@vnu.edu.vn', 979235038, 'Address.', '1684125062avatar5.jpg'),
+(15, 'Thi Nhai', 'Doan', 'female', 'Technology', '1', 'B', '2021-01-01', '1980-01-01', 'thinhai@vnu.edu.vn', 979235038, 'Address.', '1684125106avatar6.jpg'),
+(16, 'Thi Thanh', 'Nguyen', 'female', 'Civic Education', '1', 'B', '2021-01-01', '1980-01-01', 'nguyenthithanh@vnu.edu.vn', 979235038, 'Address.', '1684125161avatar7.jpg'),
+(17, 'Thi Thom', 'Nguyen', 'female', 'Literatures', '1', 'B', '2021-01-01', '1980-01-01', 'nguyenthithom@vnu.edu.vn', 979235038, 'Address.', '1684125217avatar9.jpg'),
+(18, 'Hoai Thuong', 'Nguyen Thi', 'female', 'Mathematics', '1', 'B', '2021-01-01', '1980-01-01', 'hoaithuong@vnu.edu.vn', 979235038, 'Address.', '1684125286avatar10.jpg'),
+(19, 'Thi Thuy', 'Nguyen', 'female', 'Biology', '1', 'B', '0021-01-02', '1980-01-01', 'nguyenthithuy@vnu.edu.vn', 979235038, 'Address.', '1684125327avatar12.jpg'),
+(20, 'Minh Tuyen', 'Le', 'male', 'Physical Excercises', '1', 'B', '0000-00-00', '1980-01-01', 'minhtuyen@vnu.edu.vn', 979235038, 'Address.', '1684125367avatar2.jpg'),
+(21, 'Quoc Dam', 'Tran', 'male', 'Physics', '1', 'B', '2021-01-01', '1980-01-01', 'quocdam@vnu.edu.vn', 979235038, 'Address.', '1684125431avatar3.jpg'),
+(23, 'Ngoc Hang', 'Do Thi', 'female', 'Information Technology', '1', 'B', '2021-01-01', '1980-01-01', 'ngochang@vnu.edu.vn', 979235038, 'Address.', '1684126005avatar17.jpg');
 
 -- --------------------------------------------------------
 
@@ -212,7 +270,7 @@ CREATE TABLE `sms_teacher_posts` (
 --
 
 INSERT INTO `sms_teacher_posts` (`teacher_post_id`, `title`, `body`, `created_at`, `class_id`, `teacher_id`, `updated_at`) VALUES
-(29, 'Title 1', '<span style=\"font-size: 16px; font-family: Montserrat, sans-serif;\">b</span><span style=\"font-size: 16px; font-family: Montserrat, sans-serif;\">o</span><span style=\"font-size: 16px; font-family: Montserrat, sans-serif;\">d</span><span style=\"font-size: 16px; font-family: Montserrat, sans-serif;\">y</span><span style=\"font-size: 16px; font-family: Montserrat, sans-serif;\"> </span><span style=\"font-size: 16px; font-family: Montserrat, sans-serif;\">1</span>', '2023-05-12 19:39:20', 1, 12, '2023-05-12 19:41:48');
+(33, 'Title for English-C1', 'Body 1.', '2023-05-15 05:12:16', 1, 35, '2023-05-15 05:12:16');
 
 -- --------------------------------------------------------
 
@@ -237,9 +295,38 @@ CREATE TABLE `sms_user` (
 
 INSERT INTO `sms_user` (`id`, `firstname`, `lastname`, `username`, `email`, `password`, `avatar`, `is_admin`) VALUES
 (1, 'Viet', 'Tran Tat', 'cucululu', 'trantatviet2003@gmail.com', '$2y$10$AAPlDb4suijBDEqsOyDES.fGfj2b3sZGC4fft89uTNZlvejerXpQ6', '1679902455avatar14.jpg', 1),
-(12, 'John', 'Doe', 'Jane', 'janedoe@vnu.edu.vn', '$2y$10$lcaF6IsyLybNFLKNDyRggeU.rgkO.FvtJDGrVoT75DsscyEZowonW', '1681634010avatar10.jpg', 2),
-(25, 'Tat Viet', 'Tran', 'Tat Viet', '21020132@vnu.edu.vn', '$2y$10$Yh1tXWDi/gM8V/XL/.Enn.DKnZqtw2MWJjZ9I126GgbcbSEk8YR7a', '1683934840avatar7.jpg', 0),
-(26, 'Xuan Truong', 'Tran ', 'Xuan Truong', '21020418@vnu.edu.vn', '$2y$10$Y9hr70i35jMqmP33CKQUieYvZ1Bs5Khi0W1DgZbGEf7sSCMW6UONW', '1683934893avatar2.jpg', 0);
+(35, 'Thanh Huong', 'Pham Thi', 'Thanh Huong', 'phamthithanhhuong@vnu.edu.vn', '$2y$10$hLdmdJuXBdgwJqGw9xKB5.1dSLL4YIGK/edFAHzxJZerqlH1uhfOi', '1684124951avatar1.jpg', 2),
+(36, 'Thu Huyen', 'Bui Thi', 'Thu Huyen', 'thuhuyen@vnu.edu.vn', '$2y$10$FnRvPc96tuAjzvl0MRdS/eHnFXIJEcHwinlAOOGG5YKTErE/PE2BG', '1684125017avatar4.jpg', 2),
+(37, 'Yen My', 'Nguyen Thi', 'Yen My', 'yenmy@vnu.edu.vn', '$2y$10$X7OljLt9YaPX8lslKY4a9.U.tTg.sYE9DHAsl/ux5Uye8ZSDmmIda', '1684125062avatar5.jpg', 2),
+(38, 'Thi Nhai', 'Doan', 'Thi Nhai', 'thinhai@vnu.edu.vn', '$2y$10$1Zas68.ZodBUR3Qcf/QqoeY8VAFlD1fsPMJL19zT/hEYOUX0XO5tC', '1684125106avatar6.jpg', 2),
+(39, 'Thi Thanh', 'Nguyen', 'Thi Thanh', 'nguyenthithanh@vnu.edu.vn', '$2y$10$ORIAdJNcMFDO1UUme2P2UuvipZMOeShzs83xC2djJGGHh.6IwmLam', '1684125161avatar7.jpg', 2),
+(40, 'Thi Thom', 'Nguyen', 'Thi Thom', 'nguyenthithom@vnu.edu.vn', '$2y$10$vmTF.0ig.fnADeR2hQ7lO.ZwXTMTlMVURA377Fx0GH1gxmW4694Zq', '1684125217avatar9.jpg', 2),
+(41, 'Hoai Thuong', 'Nguyen Thi', 'Hoai Thuong', 'hoaithuong@vnu.edu.vn', '$2y$10$OZyF2yJ3KcW5Sv9NsW0.u.Hud46ykbSFBVSmvJSgDu8WOHuR9jbd6', '1684125286avatar10.jpg', 2),
+(42, 'Thi Thuy', 'Nguyen', 'Thi Thuy', 'nguyenthithuy@vnu.edu.vn', '$2y$10$lpvaWVjApnoERm2KAf0HEO6P/hBiyWW0wK1sFn1BRzIErSUf3oCGS', '1684125327avatar12.jpg', 2),
+(43, 'Minh Tuyen', 'Le', 'Minh Tuyen', 'minhtuyen@vnu.edu.vn', '$2y$10$ADS2UWbYvg/jCVEoLuRFQOVRQP7vs.rxw4/inRipuActDPHgJrDXW', '1684125367avatar2.jpg', 2),
+(44, 'Quoc Dam', 'Tran', 'Quoc Dam', 'quocdam@vnu.edu.vn', '$2y$10$ko5f108PYwBqR2zrCzH7puBmLcVv1j71ene1eizev3DMkbkPJMWLG', '1684125431avatar3.jpg', 2),
+(46, 'Ngoc Hang', 'Do Thi', 'Ngoc Hang', 'ngochang@vnu.edu.vn', '$2y$10$SCZjEkF1FjL9WBYf3qYF2.ZnItxsPYQs1.KRjM6Z0mztRl7hDE76C', '1684126005avatar17.jpg', 2),
+(47, 'My Anh', 'Nguyen Ngoc', 'My Anh', '21020000@vnu.edu.vn', '$2y$10$Ttd4Zq/U3hEaVpXhpArPE.4dU3HF6h2Lb6rgU/5U.1daaixl5c1LO', '1684126343avatar1.jpg', 0),
+(48, 'Duy Anh', 'Phi', 'Duy Anh', '21020001@vnu.edu.vn', '$2y$10$jcitsEvHcdyvIJYXK1H94.EghxFygVdYwFpXEO4AwLtk1ArhfEL86', '1684126396avatar2.jpg', 0),
+(49, 'Tien Dat', 'Nguyen', 'Tien Dat', '21020003@vnu.edu.vn', '$2y$10$SoS4eHAyZRNF65WtDNr9uOKie6Rdg.8TxIRLOetjhA8ptA3WFkZ/a', '1684126476avatar3.jpg', 0),
+(50, 'Tuan Duc', 'Nguyen', 'Tuan Duc', '21020004@vnu.edu.vn', '$2y$10$ToppYcrYtfA2QvPDcZi4z.HQvclbcP785SYpeH.2lQ/Tx22ksthZ6', '1684126530avatar8.jpg', 0),
+(51, 'Trung Hai', 'Nguyen', 'Trung Hai', '21020005@vnu.edu.vn', '$2y$10$UxU2MUi1UHkpaBCeJ/17V.F1adjwLRbZQpa7smUnyxqzf7FJPzCS2', '1684126598avatar11.jpg', 0),
+(52, 'Minh Hien', 'Le Dang', 'Minh Hien', '21020006@vnu.edu.vn', '$2y$10$u36ed6jDeuNhAAU/o3scOe8mQ9G59khYSoQRKV565bTHisaT86YWu', '1684126694avatar13.jpg', 0),
+(53, 'Minh Hieu', 'Duong', 'Minh Hieu', '21020007@vnu.edu.vn', '$2y$10$bCXueRfql.EscWvPYuQm5.ACnXJpC9PT9utOGjYU.8ZCSm9Qk3/G2', '1684126748avatar15.jpg', 0),
+(54, 'Dinh Hieu', 'Nguyen', 'Dinh Hieu', '21020008@vnu.edu.vn', '$2y$10$ep7VIdbGDDY/De6PrRBEc..GqBHSnTRSjNCnYATlE9gCQ1ohIZ/wS', '1684126802avatar2.jpg', 0),
+(55, 'Hien', 'Phan', 'Hien', '21020009@vnu.edu.vn', '$2y$10$tc60c1qyQvcsYiiXkSaWWuwvw3HskMQ9zw5piBNShNliOlOo6BNBO', '1684126898avatar3.jpg', 0),
+(56, 'Tuan Hoang', 'Ha', 'Tuan Hoang', '21020010@vnu.edu.vn', '$2y$10$z2H2Zc25DD6ouRBIQvoyjuSZTeduIHy4w0ouM5vTA0H6Mx5EsAaO.', '1684126962avatar8.jpg', 0),
+(57, 'Hoang', 'Phan', 'Hoang', '21020011@vnu.edu.vn', '$2y$10$MT18ne.5lEeZcuERxQknRePyEEDqoe3Tiy34JWkf.pd0ISFrsjF4W', '1684127005avatar11.jpg', 0),
+(58, 'Duc Huy', 'Tran', 'Duc Huy', '21020012@vnu.edu.vn', '$2y$10$vM7VrVZOjf1p.DYvWuaj5u2dVsSxT.Jqnp7pqMQZpYKGVe2lwrfIG', '1684127062avatar13.jpg', 0),
+(59, 'Khanh Hung', 'Dinh', 'Khanh Hung', '21020013@vnu.edu.vn', '$2y$10$jJUh/bUD8nP22VFETN8Vde8Fif5g9uMbej2KYYWLyy1Zxkquqx22i', '1684127131avatar15.jpg', 0),
+(60, 'Minh Khanh', 'Doan', 'Minh Khanh', '21020015@vnu.edu.vn', '$2y$10$KNYOYE75AYc6wq9kdnr5EuTcyJ7ajF97udgAPwhs8RhML3rLdsokm', '1684127172avatar2.jpg', 0),
+(61, 'Nguyen Khoi ', 'Luc', 'Nguyen Khoi ', '21020016@vnu.edu.vn', '$2y$10$laMyJp22T.QIfSoFxgJkVOICcfioRMFtDZXDU3PK.u.6PtKwmgyyO', '1684127222avatar3.jpg', 0),
+(62, 'Anh Khoi', 'Phan', 'Anh Khoi', '21020017@vnu.edu.vn', '$2y$10$r9Iu458othZO2H.I8KVfE.yXP/Rz3ySbMKIeOJnlQ1yRP9TMJLLcm', '1684127285avatar8.jpg', 0),
+(63, 'Tuan Kiet', 'Hoang', 'Tuan Kiet', '21020018@vnu.edu.vn', '$2y$10$re3uBE9GlG0vcoGBFgrUgOmN0FUceBMeCyijc8knYhZnfoXgPqQye', '1684127348avatar11.jpg', 0),
+(64, 'Hai Long', 'Nguyen Khac', 'Hai Long', '21020019@vnu.edu.vn', '$2y$10$HEsNy2.gqhqLu.ASoyBS2.VUN1dmS79vtCX70IU1uD8xufAEJL6Eu', '1684127386avatar11.jpg', 0),
+(65, 'Ngoc Long', 'Nguyen', 'Ngoc Long', '21020020@vnu.edu.vn', '$2y$10$fSo9xifnVptuudXHmR8zp.BdsVw134bhyr0Fa.2m.TSKEbiogrzzu', '1684127426avatar13.jpg', 0),
+(72, 'Tat Viet', 'Tran', 'Tat Viet', '21020132@vnu.edu.vn', '$2y$10$WK5On7OwWEumL51sP9c1KuqShFshJReW3X3.yMg7JYhTg6jjeasHu', '1684130203avatar2.jpg', 0),
+(73, 'Nhat Minh', 'Dang', 'Nhat Minh', '21020021@vnu.edu.vn', '$2y$10$QpwbCyt.N3WzHEbF8MJcveayGCtzQ1wO61RP18RTD.nszAgcw1/GO', '1684130847avatar3.jpg', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -257,8 +344,7 @@ ALTER TABLE `sms_admin_posts`
 ALTER TABLE `sms_classes`
   ADD PRIMARY KEY (`class_id`),
   ADD KEY `class` (`class`),
-  ADD KEY `FK_classSection` (`section`),
-  ADD KEY `FK_classTeacher` (`teacher_id`);
+  ADD KEY `FK_classSection` (`section`);
 
 --
 -- Chỉ mục cho bảng `sms_scores`
@@ -331,55 +417,55 @@ ALTER TABLE `sms_user`
 -- AUTO_INCREMENT cho bảng `sms_admin_posts`
 --
 ALTER TABLE `sms_admin_posts`
-  MODIFY `admin_post_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `admin_post_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_classes`
 --
 ALTER TABLE `sms_classes`
-  MODIFY `class_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `class_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_scores`
 --
 ALTER TABLE `sms_scores`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_section`
 --
 ALTER TABLE `sms_section`
-  MODIFY `section_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `section_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_students`
 --
 ALTER TABLE `sms_students`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_subjects`
 --
 ALTER TABLE `sms_subjects`
-  MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_teacher`
 --
 ALTER TABLE `sms_teacher`
-  MODIFY `teacher_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `teacher_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_teacher_posts`
 --
 ALTER TABLE `sms_teacher_posts`
-  MODIFY `teacher_post_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `teacher_post_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT cho bảng `sms_user`
 --
 ALTER TABLE `sms_user`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -389,8 +475,7 @@ ALTER TABLE `sms_user`
 -- Các ràng buộc cho bảng `sms_classes`
 --
 ALTER TABLE `sms_classes`
-  ADD CONSTRAINT `FK_classSection` FOREIGN KEY (`section`) REFERENCES `sms_section` (`section`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_classTeacher` FOREIGN KEY (`teacher_id`) REFERENCES `sms_teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_classSection` FOREIGN KEY (`section`) REFERENCES `sms_section` (`section`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `sms_scores`
